@@ -9,6 +9,7 @@ logging:
   level:
     root: info
     druid.sql: warn
+    com.baomidou.example.mapper: debug
 spring:
   #----- jpa config -----
   jpa.show-sql: false
@@ -16,7 +17,7 @@ spring:
   jpa.database-platform: org.hibernate.dialect.MySQL8Dialect
   #----- database base config -----
   datasource.druid.driverClassName: 'com.mysql.cj.jdbc.Driver'
-  datasource.druid.url: jdbc:mysql://127.0.0.1:3306/learn?useSSL=false&${dataBaseParam}
+  datasource.druid.url: jdbc:mysql://127.0.0.1:3306/crabapples_framework?useSSL=false&${dataBaseParam}
   datasource.druid.username: root
   datasource.druid.password: root
   #----- database more config -----

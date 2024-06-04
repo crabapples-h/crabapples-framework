@@ -30,13 +30,12 @@ public class SysUser extends BaseEntity<SysUser> {
     private String password;
     private String avatar;
     private String name;
-    private String content;
     private Integer status;
     @TableField(exist = false)
     private List<String> roleList;
     @TableLogic
     private Boolean delFlag;
-    private byte isAdmin;
+//    private byte isAdmin;
     private String createBy;
     private Date createTime;
     private Date updateTime;

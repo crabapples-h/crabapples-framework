@@ -7,16 +7,23 @@ dataBaseParam: useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shang
 virtualPath: /file/
 ###
 server.port: 9093
-server.application.name: learn
+server.application.name: crabapples_framework
 
 spring.profiles.active: dev
 spring.servlet.multipart.max-file-size: 100MB
 
-mybatis.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
+mybatis.mapper-locations:
+  - classpath*:mapper/*.xml
+  - classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
 mybatis-plus.mapper-locations:
   - classpath*:mapper/*.xml
   - classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
-mybatis-flex.mapper-locations: classpath*:mapper/*.xml,classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
+  - classpath*:cn/crabapples/**/**/dao/mybatis/xml/*.xml
+  - classpath*:cn/crabapples/**/**/**/dao/mybatis/xml/*.xml
+  - classpath*:cn/crabapples/system/sysRole/dao/mybatis/xml/SysRolesMapper.xml
+mybatis-flex.mapper-locations:
+  - classpath*:mapper/*.xml
+  - classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
 # nacos配置
 #nacos.config.server-addr: @nacos.server-addr@
 # 日志配置

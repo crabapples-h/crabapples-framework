@@ -170,10 +170,13 @@ public class JwtTokenUtils {
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
         Date exp = new Date(nowMillis + expiresSecond);
+        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(base64Secret);
+        Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
         return Jwts.builder()
                 .setHeaderParam("type", "JWT")
                 .setSubject(subject)
-                .signWith(SignatureAlgorithm.HS256, subject)
+                .signWith(signatureAlgorithm, signingKey)
                 .setIssuedAt(new Date())
                 .setNotBefore(now)
                 .setExpiration(exp)

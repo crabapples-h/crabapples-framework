@@ -39,14 +39,8 @@ import org.springframework.web.client.RestTemplate;
  * springCloud 使用bootstrap配置文件
  */
 
-//@SpringBootApplication
 @SpringBootConfiguration
 @EnableAutoConfiguration
-
-//--------start-------
-// 动态数据源，使用@DataSourceChange(name="xxx")切换
-//@Import({DynamicDataSourceRegister.class})
-//--------end-------
 
 //mybatis扫描路径(如果使用注解的方式可不用配置)
 @MapperScans({
@@ -57,12 +51,6 @@ import org.springframework.web.client.RestTemplate;
         @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE,
                 classes = {DynamicDataSourceRegister.class}),
 })
-//@EnableNacosConfig(globalProperties = @NacosProperties(serverAddr = "192.168.3.20:8848"))
-//@NacosPropertySource(dataId = "learn-dev.yml", autoRefreshed = true)
-//@PropertySources({
-//        @PropertySource(value = "classpath:jdbc.properties", ignoreResourceNotFound = true),
-//        @PropertySource(value = "common.properties", ignoreResourceNotFound = true)
-//})
 public class Application {
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
@@ -88,7 +76,7 @@ public class Application {
         return factory -> factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/index.html"));
     }
 
-    //    @Bean
+    @Bean
     public WebServerFactoryCustomizer containerCustomizer() {
         return (WebServerFactoryCustomizer<ConfigurableWebServerFactory>) factory -> {
             // 对嵌入式servlet容器的配置

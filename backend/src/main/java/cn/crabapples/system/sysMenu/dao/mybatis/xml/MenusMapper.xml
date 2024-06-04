@@ -67,9 +67,9 @@
     <select id="getUserMenus" resultType="cn.crabapples.system.sysMenu.entity.SysMenu">
         select distinct sys_menu.*
         from sys_user
-                 INNER join sys_user_roles on sys_user.id = sys_user_roles.user_id
-                 INNER JOIN sys_role_menus on sys_role_menus.role_id = sys_user_roles.role_id
-                 INNER JOIN sys_menu on sys_menu.id = sys_role_menus.menu_id
+                 INNER join sys_user_role on sys_user.id = sys_user_role.user_id
+                 INNER JOIN sys_role_menu on sys_role_menu.role_id = sys_user_role.role_id
+                 INNER JOIN sys_menu on sys_menu.id = sys_role_menu.menu_id
         where sys_user.id = #{userId}
     </select>
 
