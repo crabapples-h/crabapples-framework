@@ -55,29 +55,9 @@ export default {
 <style scoped lang="less">
 @import "~@public/color.less";
 
-.title {
-  font-size: 20px;
-  color: #fff;
-  font-weight: 700;
-}
-
-.ant-layout-header {
-  background: @primary-color;
-  color: #fff;
-  height: 7vh;
-  line-height: 7vh;
-}
-
-.ant-layout-footer {
-  background: @primary-color;
-  color: #fff;
-  height: 10vh;
-  line-height: 7vh;
-}
-
 .ant-layout-sider {
   width: 100%;
-  height: 83vh;
+  //height: 83vh;
   background: #fff;
 }
 
@@ -86,7 +66,7 @@ export default {
   padding: 12px;
   background: #fff;
   min-height: 120px;
-  height: 83vh;
+  height: 86.6vh;
   overflow: auto;
 }
 

@@ -1,17 +1,23 @@
 <template>
   <div id="app">
-    <keep-alive>
-      <router-view/>
-    </keep-alive>
+    <a-locale-provider :locale="zh_CN">
+      <router-view></router-view>
+    </a-locale-provider>
   </div>
 </template>
 <script>
 import storage from '@/store/storage'
-import Loading from './views/base/Loading'
+import zh_CN from 'ant-design-vue/lib/locale-provider/zh_CN';
+
 import { whiteList } from '@/router'
 
 export default {
   name: 'App',
+  computed: {
+    zh_CN() {
+      return zh_CN
+    }
+  },
   data() {
     return {}
   },
