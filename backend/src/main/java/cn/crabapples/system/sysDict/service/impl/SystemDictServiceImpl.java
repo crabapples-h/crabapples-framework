@@ -1,10 +1,10 @@
 package cn.crabapples.system.sysDict.service.impl;
 
-import cn.crabapples.system.sysDict.DictDAO;
+import cn.crabapples.system.sysDict.dao.DictDAO;
 import cn.crabapples.system.sysDict.entity.SysDict;
 import cn.crabapples.system.sysDict.entity.SysDictItem;
-import cn.crabapples.system.sysDict.DictForm;
-import cn.crabapples.system.sysDict.DictItemForm;
+import cn.crabapples.system.sysDict.form.DictForm;
+import cn.crabapples.system.sysDict.form.DictItemForm;
 import cn.crabapples.system.sysDict.service.SystemDictService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;

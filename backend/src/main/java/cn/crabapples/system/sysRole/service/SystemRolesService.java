@@ -1,9 +1,9 @@
 package cn.crabapples.system.sysRole.service;
 
 import cn.crabapples.common.base.BaseService;
-import cn.crabapples.system.sysRole.SysRolesDTO;
-import cn.crabapples.system.sysRole.SysRole;
-import cn.crabapples.system.sysRole.RolesForm;
+import cn.crabapples.system.sysRole.dto.SysRolesDTO;
+import cn.crabapples.system.sysRole.entity.SysRole;
+import cn.crabapples.system.sysRole.form.RolesForm;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
  * qq 294046317
  * pc-name mrhe
  */
-public interface SystemRolesService extends BaseService {
+public interface SystemRolesService {
 
     List<SysRole> getUserRoles();
 

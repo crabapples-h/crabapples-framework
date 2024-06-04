@@ -1,8 +1,8 @@
 package cn.crabapples.system.sysMenu.service;
 
 import cn.crabapples.common.base.BaseService;
-import cn.crabapples.system.sysMenu.SysMenu;
-import cn.crabapples.system.sysMenu.MenusForm;
+import cn.crabapples.system.sysMenu.entity.SysMenu;
+import cn.crabapples.system.sysMenu.form.MenusForm;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import java.util.List;

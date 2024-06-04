@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.crabapples.system.sysRole.dao.mybatis.mapper.SysRoleMapper">
+    <select id="getUserRoles" resultType="cn.crabapples.system.sysRole.entity.SysRole">
+        select sys_role.*
+        from sys_user_role
+                 left join sys_role on sys_user_role.role_id = sys_role.id
+        where sys_user_role.user_id = #{userId}
+    </select>
+</mapper>

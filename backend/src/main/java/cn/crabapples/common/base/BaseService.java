@@ -1,7 +1,7 @@
 package cn.crabapples.common.base;
 
 import cn.crabapples.common.dic.DIC;
-import cn.crabapples.system.sysMenu.SysMenu;
+import cn.crabapples.system.sysMenu.entity.SysMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  * qq 294046317
  * pc-name mrhe
  */
-public interface BaseService<T> extends IService<T> {
+public interface BaseService<T> {
     /**
      * 将菜单树中标记为删除的去除
      */
@@ -50,7 +50,7 @@ public interface BaseService<T> extends IService<T> {
             // 判断用户拥有的菜单中是否包含当前菜单
             boolean exist = userMenuList.contains(e.getId());
             // 判断用户拥有的菜单中是否包含当前菜单的子菜单
-            boolean sizeZero = e.getChildren().size() > 0;
+            boolean sizeZero = !e.getChildren().isEmpty();
             return exist || sizeZero;
         }).collect(Collectors.toList());
     }

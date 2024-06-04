@@ -3,16 +3,14 @@ package cn.crabapples.system.sysUser.service.impl;
 import cn.crabapples.common.ApplicationException;
 import cn.crabapples.common.jwt.JwtTokenUtils;
 import cn.crabapples.common.utils.AssertUtils;
-import cn.crabapples.system.sysUser.dao.mybatis.SysUserMapper;
+import cn.crabapples.system.sysUser.dao.SysUserDAO;
 import cn.crabapples.system.sysUser.dto.SysUserDTO;
-import cn.crabapples.system.sysUser.dao.UserDAO;
 import cn.crabapples.system.sysUser.entity.SysUser;
 import cn.crabapples.system.sysUser.form.SysUserForm;
 import cn.crabapples.system.sysUser.service.SystemUserService;
-import cn.crabapples.system.sysUserRole.SystemUserRoleService;
+import cn.crabapples.system.sysUserRole.service.SystemUserRoleService;
 import cn.hutool.crypto.digest.MD5;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,10 +32,10 @@ import java.util.List;
  */
 @Service
 @Slf4j
-public class SystemUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SystemUserService {
+public class SystemUserServiceImpl implements SystemUserService {
     @Value("${isCrypt}")
     private boolean isCrypt;
-    private final UserDAO userDAO;
+    private final SysUserDAO userDAO;
     @Value("${isDebug}")
     private boolean isDebug;
     private final JwtTokenUtils jwtTokenUtils;
@@ -45,8 +43,9 @@ public class SystemUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> i
     private final SystemUserRoleService userRoleService;
 
 
-    public SystemUserServiceImpl(UserDAO userDAO, JwtTokenUtils jwtTokenUtils,
-                                 HttpServletRequest request, SystemUserRoleService userRoleService) {
+    public SystemUserServiceImpl(SysUserDAO userDAO, JwtTokenUtils jwtTokenUtils,
+                                 HttpServletRequest request,
+                                 SystemUserRoleService userRoleService) {
         this.userDAO = userDAO;
         this.jwtTokenUtils = jwtTokenUtils;
         this.request = request;

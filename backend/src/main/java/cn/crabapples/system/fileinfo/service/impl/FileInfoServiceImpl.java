@@ -1,7 +1,7 @@
 package cn.crabapples.system.fileinfo.service.impl;
 
 import cn.crabapples.common.utils.file.FileUtils;
-import cn.crabapples.system.fileinfo.dao.mybatis.FileInfoMapper;
+import cn.crabapples.system.fileinfo.dao.mybatis.mapper.FileInfoMapper;
 import cn.crabapples.system.fileinfo.entity.FileInfo;
 import cn.crabapples.system.fileinfo.service.FileInfoService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

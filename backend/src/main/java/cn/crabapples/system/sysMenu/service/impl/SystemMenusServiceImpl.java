@@ -1,10 +1,10 @@
 package cn.crabapples.system.sysMenu.service.impl;
 
-import cn.crabapples.system.sysMenu.MenusDAO;
-import cn.crabapples.system.sysMenu.SysMenu;
-import cn.crabapples.system.sysMenu.MenusForm;
+import cn.crabapples.system.sysMenu.dao.SysMenuDAO;
+import cn.crabapples.system.sysMenu.entity.SysMenu;
+import cn.crabapples.system.sysMenu.form.MenusForm;
 import cn.crabapples.system.sysMenu.service.SystemMenusService;
-import cn.crabapples.system.sysRoleMenu.SystemRoleMenusService;
+import cn.crabapples.system.sysRoleMenu.service.SystemRoleMenusService;
 import cn.crabapples.system.sysUser.service.SystemUserService;
 import cn.crabapples.system.sysUser.entity.SysUser;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -34,10 +34,11 @@ public class SystemMenusServiceImpl implements SystemMenusService {
     private final HttpServletRequest request;
     private final SystemUserService userService;
     private final SystemRoleMenusService roleMenusService;
-    private final MenusDAO menusDAO;
+    private final SysMenuDAO menusDAO;
 
-    public SystemMenusServiceImpl(HttpServletRequest request, MenusDAO menusDAO,
-                                  SystemUserService userService, SystemRoleMenusService roleMenusService) {
+    public SystemMenusServiceImpl(HttpServletRequest request, SysMenuDAO menusDAO,
+                                  SystemUserService userService,
+                                  SystemRoleMenusService roleMenusService) {
         this.request = request;
         this.menusDAO = menusDAO;
         this.userService = userService;

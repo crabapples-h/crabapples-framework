@@ -2,9 +2,9 @@ package cn.crabapples.system.sysRole.controller;
 
 import cn.crabapples.common.ResponseDTO;
 import cn.crabapples.common.base.BaseController;
-import cn.crabapples.system.sysRole.SysRolesDTO;
-import cn.crabapples.system.sysRole.SysRole;
-import cn.crabapples.system.sysRole.RolesForm;
+import cn.crabapples.system.sysRole.dto.SysRolesDTO;
+import cn.crabapples.system.sysRole.entity.SysRole;
+import cn.crabapples.system.sysRole.form.RolesForm;
 import cn.crabapples.system.sysRole.service.SystemRolesService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 //import io.swagger.annotations.Api;

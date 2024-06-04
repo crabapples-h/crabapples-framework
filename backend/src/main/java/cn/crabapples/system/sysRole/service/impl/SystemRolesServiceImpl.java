@@ -1,12 +1,12 @@
 package cn.crabapples.system.sysRole.service.impl;
 
-import cn.crabapples.system.sysMenu.MenusDAO;
-import cn.crabapples.system.sysRole.RolesDAO;
-import cn.crabapples.system.sysRole.SysRolesDTO;
-import cn.crabapples.system.sysMenu.SysMenu;
-import cn.crabapples.system.sysRole.SysRole;
-import cn.crabapples.system.sysRole.RolesForm;
-import cn.crabapples.system.sysRoleMenu.SystemRoleMenusService;
+import cn.crabapples.system.sysMenu.dao.SysMenuDAO;
+import cn.crabapples.system.sysRole.dao.SysRoleDAO;
+import cn.crabapples.system.sysRole.dto.SysRolesDTO;
+import cn.crabapples.system.sysMenu.entity.SysMenu;
+import cn.crabapples.system.sysRole.entity.SysRole;
+import cn.crabapples.system.sysRole.form.RolesForm;
+import cn.crabapples.system.sysRoleMenu.service.SystemRoleMenusService;
 import cn.crabapples.system.sysRole.service.SystemRolesService;
 import cn.crabapples.system.sysUser.service.SystemUserService;
 import cn.crabapples.system.sysUser.entity.SysUser;
@@ -35,13 +35,16 @@ import java.util.stream.Collectors;
 public class SystemRolesServiceImpl implements SystemRolesService {
 
     private final HttpServletRequest request;
-    private final RolesDAO rolesDAO;
-    private final MenusDAO menusDAO;
+    private final SysRoleDAO rolesDAO;
+    private final SysMenuDAO menusDAO;
     private final SystemUserService userService;
     private final SystemRoleMenusService roleMenusService;
 
-    public SystemRolesServiceImpl(RolesDAO rolesDAO, MenusDAO menusDAO, StringRedisTemplate redisTemplate,
-                                  HttpServletRequest request, SystemUserService userService, SystemRoleMenusService roleMenusService) {
+    public SystemRolesServiceImpl(SysRoleDAO rolesDAO, SysMenuDAO menusDAO,
+                                  StringRedisTemplate redisTemplate,
+                                  HttpServletRequest request,
+                                  SystemUserService userService,
+                                  SystemRoleMenusService roleMenusService) {
         this.rolesDAO = rolesDAO;
         this.menusDAO = menusDAO;
         this.request = request;

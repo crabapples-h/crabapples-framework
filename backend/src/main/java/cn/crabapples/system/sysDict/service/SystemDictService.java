@@ -3,8 +3,8 @@ package cn.crabapples.system.sysDict.service;
 import cn.crabapples.common.base.BaseService;
 import cn.crabapples.system.sysDict.entity.SysDict;
 import cn.crabapples.system.sysDict.entity.SysDictItem;
-import cn.crabapples.system.sysDict.DictForm;
-import cn.crabapples.system.sysDict.DictItemForm;
+import cn.crabapples.system.sysDict.form.DictForm;
+import cn.crabapples.system.sysDict.form.DictItemForm;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 
 import java.util.List;

@@ -17,7 +17,7 @@ import static com.baomidou.mybatisplus.annotation.IdType.ASSIGN_UUID;
 @EqualsAndHashCode(callSuper = true)
 @Setter
 @Getter
-@TableName("sys_dict_item")
+@TableName(keepGlobalPrefix = true)
 @ToString
 @Data(staticConstructor = "create")
 @Accessors(chain = true)

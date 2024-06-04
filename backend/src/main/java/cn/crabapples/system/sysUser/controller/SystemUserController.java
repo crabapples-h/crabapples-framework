@@ -91,11 +91,11 @@ public class SystemUserController extends BaseController {
 
     @PostMapping("/unlock/{id}")
 //    @ApiOperation(value = "解锁用户", notes = "锁定用户接口")
-    public ResponseDTO<Object> unlockUser(@PathVariable String id) {
+    public ResponseDTO<Boolean> unlockUser(@PathVariable String id) {
         log.info("收到请求->解锁用户,id:[{}]", id);
-        userService.unlockUser(id);
+        Boolean status = userService.unlockUser(id);
         log.info("返回结果->解锁用户完成");
-        return new ResponseDTO<>();
+        return new ResponseDTO<>(status);
     }
 
     @PostMapping("/password/reset")

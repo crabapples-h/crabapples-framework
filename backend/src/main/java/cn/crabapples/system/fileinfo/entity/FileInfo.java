@@ -1,5 +1,6 @@
 package cn.crabapples.system.fileinfo.entity;
 
+import cn.crabapples.common.base.BaseEntity;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -9,19 +10,22 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 
 @EqualsAndHashCode(callSuper = true)
+@Accessors(chain = true)
 @Setter
 @Getter
-@TableName("file_info")
-@Accessors(chain = true)
-public class FileInfo extends Model<FileInfo> {
-
+@Entity
+@TableName(keepGlobalPrefix = true)
+public class FileInfo extends BaseEntity<FileInfo> {
+    @Id
     @TableId
     private String id;
     //原文件名
     private String oldName;
-
     //文件虚拟访问路径
     private String virtualPath;
 
