@@ -1,66 +1,66 @@
-package cn.crabapples.system.sysUser.dao;//package org.example.application.system.dao;
-//
-//import org.example.application.common.BaseDAO;
-//import org.example.application.system.dao.jpa.UserRepository;
-//import org.example.application.system.dao.mapper.UserMapper;
-//import org.example.application.system.sysUser.entity.SysUser;
-//import org.springframework.stereotype.Component;
-//import org.springframework.transaction.annotation.Transactional;
-//
-//import java.util.List;
-//
-//@Component
-//public class UserDAO extends BaseDAO {
-//    private final UserMapper mapper;
-//
-//    public UserDAO(UserMapper mapper) {
-//        this.mapper = mapper;
-//    }
-//
-//    public SysUser findByUsername(String username) {
-//        return mapper.findByUsername(username).orElse(null);
-//    }
-//
-//    public SysUser save(SysUser user) {
-//        return mapper.save(user);
-//    }
-//
-//    public SysUser findById(String id) {
-//        return mapper.findById(id).orElse(null);
-//    }
-//
-//    public List<SysUser> findByIds(List<String> ids) {
-//        return mapper.findByIdInAndStatusAndDelFlag(ids, 0, NOT_DEL);
-//    }
-//
-//    @Transactional
-//    public void delUser(String id) {
-//        mapper.deleteById(id);
-//    }
-//
-//    public List<SysUser> findByName(String name) {
-//        return mapper.findByName(name);
-//    }
-//
-//    public SysUser findByUsernameAndPasswordAndStatusNotAndDelFlagNot(String username, String password, int status, int delFlag) {
-//        return mapper.findByUsernameAndPasswordAndStatusNotAndDelFlagNot(username, password, status, delFlag).orElse(null);
-//    }
-//
-//    public List<SysUser> findAll() {
-//        return mapper.findByDelFlag(ascByCreateTime, NOT_DEL);
-//
-//    }
-//
-//    public List<SysUser> getUserList(String userId, int status) {
-//        return mapper.findByIdNotAndStatusAndDelFlag(userId, status, NOT_DEL);
-//    }
-//
-//    @Transactional
-//    public void changeStatus(String id, Integer status) {
-//        mapper.changeStatus(id, status);
-//    }
-//
-//    public List<SysUser> findByRoleAndDelFlag(int role) {
-//        return mapper.findByRoleAndDelFlag(role, NOT_DEL);
-//    }
-//}
+package cn.crabapples.system.sysUser.dao;
+
+import cn.crabapples.common.dic.DIC;
+import cn.crabapples.system.sysUser.dao.mybatis.SysUserMapper;
+import cn.crabapples.system.sysUser.dto.SysUserDTO;
+import cn.crabapples.system.sysUser.entity.SysUser;
+import cn.crabapples.system.sysUser.form.SysUserForm;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Component
+public class UserDAO extends ServiceImpl<SysUserMapper, SysUser> {
+
+    public IPage<SysUserDTO> findAll(Integer pageIndex, Integer pageSize, SysUserForm form) {
+        Page<SysUser> page = Page.of(pageIndex, pageSize);
+        IPage<SysUser> sysUserList = baseMapper.selectPage(page, new QueryWrapper<>(form.toEntity()));
+        List<SysUserDTO> collect = sysUserList.getRecords().stream().map(e -> {
+            final SysUserDTO dto = new SysUserDTO();
+            BeanUtils.copyProperties(e, dto);
+            return dto;
+        }).collect(Collectors.toList());
+        Page<SysUserDTO> dtoPage = new Page<>();
+        BeanUtils.copyProperties(sysUserList, dtoPage);
+        dtoPage.setRecords(collect);
+        return dtoPage;
+    }
+
+    public List<SysUserDTO> findAll(SysUserForm form) {
+        return baseMapper.selectList(new QueryWrapper<>(form.toEntity())).stream().map(e -> {
+            final SysUserDTO dto = new SysUserDTO();
+            BeanUtils.copyProperties(e, dto);
+            return dto;
+        }).collect(Collectors.toList());
+    }
+
+    public SysUser findOne(SysUserForm form) {
+        return getOne(new QueryWrapper<>(form.toEntity()));
+    }
+
+    public SysUser findById(String id) {
+        return baseMapper.selectById(id);
+    }
+
+    public List<SysUser> findByIds(List<String> ids) {
+        return baseMapper.selectBatchIds(ids);
+    }
+
+    public boolean delUser(String id) {
+        return removeById(id);
+    }
+
+    public boolean lockUser(String id) {
+        return SysUser.create().selectById(id).setStatus(DIC.USER_LOCK).updateById();
+    }
+
+    public boolean unlockUser(String id) {
+        return SysUser.create().selectById(id).setStatus(DIC.USER_UNLOCK).updateById();
+    }
+}

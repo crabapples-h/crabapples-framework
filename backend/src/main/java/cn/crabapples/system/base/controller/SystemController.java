@@ -4,9 +4,9 @@ import cn.crabapples.common.Groups;
 import cn.crabapples.common.ResponseDTO;
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.common.jwt.JwtIgnore;
-import cn.crabapples.system.sysUser.UserForm;
 import cn.crabapples.system.base.service.SystemService;
-import cn.crabapples.system.sysUser.SystemUserService;
+import cn.crabapples.system.sysUser.form.SysUserForm;
+import cn.crabapples.system.sysUser.service.SystemUserService;
 //import io.swagger.v3.oas.annotations.Operation;
 //import io.swagger.v3.oas.annotations.Parameter;
 //import io.swagger.v3.oas.annotations.tags.Tag;
@@ -64,7 +64,7 @@ public class SystemController extends BaseController {
     @PostMapping(value = "/login")
 //    @Operation(summary = "用户登陆", description = "用户登陆接口",
 //            parameters = {@Parameter(required = true, name = "code", description = "token")})
-    public ResponseDTO<String> login(@RequestBody UserForm form) {
+    public ResponseDTO<String> login(@RequestBody SysUserForm form) {
         log.info("收到请求->用户登陆验证:[{}]", form);
         super.validate(form, Groups.IsLogin.class);
         String token = sysService.login(form);

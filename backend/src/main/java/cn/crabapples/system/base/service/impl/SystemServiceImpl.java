@@ -7,10 +7,10 @@ import cn.crabapples.common.utils.AssertUtils;
 import cn.crabapples.system.base.service.SystemService;
 import cn.crabapples.system.sysMenu.SysMenu;
 import cn.crabapples.system.sysRole.SysRole;
-import cn.crabapples.system.sysUser.UserForm;
 import cn.crabapples.system.sysRoleMenu.SystemRoleMenusService;
 import cn.crabapples.system.sysRole.service.SystemRolesService;
-import cn.crabapples.system.sysUser.SystemUserService;
+import cn.crabapples.system.sysUser.form.SysUserForm;
+import cn.crabapples.system.sysUser.service.SystemUserService;
 import cn.crabapples.system.sysUser.entity.SysUser;
 import cn.hutool.crypto.digest.MD5;
 import lombok.extern.slf4j.Slf4j;
@@ -72,7 +72,7 @@ public class SystemServiceImpl implements SystemService {
      */
 //    @Cacheable(value = "login:token", key = "#p0.username")
     @Override
-    public String login(UserForm form) {
+    public String login(SysUserForm form) {
         String username = form.getUsername();
         String password = form.getPassword();
         if (isCrypt) {

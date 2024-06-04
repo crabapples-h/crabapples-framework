@@ -1,4 +1,4 @@
-package cn.crabapples.system.sysUser;
+package cn.crabapples.system.sysUser.dto;
 
 import cn.crabapples.common.base.BaseEntity;
 import cn.crabapples.common.dic.Dict;

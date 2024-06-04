@@ -5,7 +5,7 @@ import cn.crabapples.system.sysMenu.SysMenu;
 import cn.crabapples.system.sysMenu.MenusForm;
 import cn.crabapples.system.sysMenu.service.SystemMenusService;
 import cn.crabapples.system.sysRoleMenu.SystemRoleMenusService;
-import cn.crabapples.system.sysUser.SystemUserService;
+import cn.crabapples.system.sysUser.service.SystemUserService;
 import cn.crabapples.system.sysUser.entity.SysUser;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

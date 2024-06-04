@@ -1,12 +1,18 @@
-package cn.crabapples.system.sysUser;
+package cn.crabapples.system.sysUser.service.impl;
 
 import cn.crabapples.common.ApplicationException;
 import cn.crabapples.common.jwt.JwtTokenUtils;
 import cn.crabapples.common.utils.AssertUtils;
+import cn.crabapples.system.sysUser.dao.mybatis.SysUserMapper;
+import cn.crabapples.system.sysUser.dto.SysUserDTO;
+import cn.crabapples.system.sysUser.dao.UserDAO;
 import cn.crabapples.system.sysUser.entity.SysUser;
+import cn.crabapples.system.sysUser.form.SysUserForm;
+import cn.crabapples.system.sysUser.service.SystemUserService;
 import cn.crabapples.system.sysUserRole.SystemUserRoleService;
 import cn.hutool.crypto.digest.MD5;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,7 +34,7 @@ import java.util.List;
  */
 @Service
 @Slf4j
-public class SystemUserServiceImpl implements SystemUserService {
+public class SystemUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SystemUserService {
     @Value("${isCrypt}")
     private boolean isCrypt;
     private final UserDAO userDAO;
@@ -59,30 +65,30 @@ public class SystemUserServiceImpl implements SystemUserService {
 
     @Override
     public List<SysUserDTO> findByName(String name) {
-        UserForm form = new UserForm();
+        SysUserForm form = new SysUserForm();
         form.setName(name);
         return userDAO.findAll(form);
     }
 
     @Override
     public SysUser findByUsername(String username) {
-        UserForm form = new UserForm();
+        SysUserForm form = new SysUserForm();
         form.setUsername(username);
         return userDAO.findOne(form);
     }
 
     @Override
-    public IPage<SysUserDTO> findAll(Integer pageIndex, Integer pageSize, UserForm form) {
+    public IPage<SysUserDTO> findAll(Integer pageIndex, Integer pageSize, SysUserForm form) {
         return userDAO.findAll(pageIndex, pageSize, form);
     }
 
     @Override
-    public List<SysUserDTO> findAll(UserForm form) {
+    public List<SysUserDTO> findAll(SysUserForm form) {
         return userDAO.findAll(form);
     }
 
     @Override
-    public boolean saveUser(UserForm form) {
+    public boolean saveUser(SysUserForm form) {
         SysUser entity = form.toEntity();
         String newPassword = form.getNewPassword();
         String againPassword = form.getAgainPassword();
@@ -137,7 +143,7 @@ public class SystemUserServiceImpl implements SystemUserService {
      * 修改密码
      */
     @Override
-    public boolean updatePassword(UserForm.UpdatePassword form) {
+    public boolean updatePassword(SysUserForm.UpdatePassword form) {
         SysUser user = checkPassword(form);
         String password = form.getOldPassword();
         String newPassword = form.getNewPassword();
@@ -154,7 +160,7 @@ public class SystemUserServiceImpl implements SystemUserService {
      * 重置密码
      */
     @Override
-    public boolean resetPassword(UserForm.ResetPassword form) {
+    public boolean resetPassword(SysUserForm.ResetPassword form) {
         SysUser user = checkPassword(form);
         String newPassword = form.getNewPassword();
         AssertUtils.notNull(user, "用户不存在");
@@ -188,7 +194,7 @@ public class SystemUserServiceImpl implements SystemUserService {
      * 1、检测两次输入密码是否相同
      * 2、检测用户是否存在
      */
-    private SysUser checkPassword(UserForm.ResetPassword form) {
+    private SysUser checkPassword(SysUserForm.ResetPassword form) {
         String newPassword = form.getNewPassword();
         String againPassword = form.getAgainPassword();
         if (!newPassword.equals(againPassword)) {

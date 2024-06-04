@@ -1,11 +1,11 @@
-package cn.crabapples.system.sysUser;
+package cn.crabapples.system.sysUser.controller;
 
 import cn.crabapples.common.Groups;
 import cn.crabapples.common.ResponseDTO;
 import cn.crabapples.common.base.BaseController;
-import cn.crabapples.system.sysUser.SysUserDTO;
-import cn.crabapples.system.sysUser.UserForm;
-import cn.crabapples.system.sysUser.SystemUserService;
+import cn.crabapples.system.sysUser.dto.SysUserDTO;
+import cn.crabapples.system.sysUser.form.SysUserForm;
+import cn.crabapples.system.sysUser.service.SystemUserService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 //import io.swagger.annotations.Api;
 //import io.swagger.annotations.ApiOperation;
@@ -42,7 +42,7 @@ public class SystemUserController extends BaseController {
     public ResponseDTO<IPage<SysUserDTO>> getUserPage(
             @RequestParam(required = false, defaultValue = "1") Integer pageIndex,
             @RequestParam(required = false, defaultValue = "10") Integer pageSize,
-            UserForm form) {
+            SysUserForm form) {
         log.info("收到请求->获取用户列表:[{}]", form);
         IPage<SysUserDTO> list = userService.findAll(pageIndex, pageSize, form);
         log.debug("返回结果->获取[分页]用户列表->完成:[{}]", list);
@@ -54,7 +54,7 @@ public class SystemUserController extends BaseController {
      */
     @GetMapping("/list")
 //    @ApiOperation(value = "获取用户列表", notes = "获取用户列表接口")
-    public ResponseDTO<List<SysUserDTO>> getUserList(UserForm form) {
+    public ResponseDTO<List<SysUserDTO>> getUserList(SysUserForm form) {
         log.info("收到请求->获取用户列表:[{}]", form);
         List<SysUserDTO> list = userService.findAll(form);
         log.debug("返回结果->获取[分页]用户列表->完成:[{}]", list);
@@ -63,7 +63,7 @@ public class SystemUserController extends BaseController {
 
     @PostMapping("/save")
 //    @ApiOperation(value = "保存用户", notes = "保存用户接口")
-    public ResponseDTO<Boolean> saveUser(@RequestBody UserForm form) {
+    public ResponseDTO<Boolean> saveUser(@RequestBody SysUserForm form) {
         log.info("收到请求->保存用户:[{}]", form);
         super.validate(form, Groups.IsAdd.class);
         boolean status = userService.saveUser(form);
@@ -100,7 +100,7 @@ public class SystemUserController extends BaseController {
 
     @PostMapping("/password/reset")
 //    @ApiOperation(value = "重置密码", notes = "重置密码接口")
-    public ResponseDTO<Boolean> resetPassword(@RequestBody UserForm.ResetPassword form) {
+    public ResponseDTO<Boolean> resetPassword(@RequestBody SysUserForm.ResetPassword form) {
         log.info("收到请求->重置密码:[{}]", form);
         super.validate(form, Groups.IsResetPassword.class);
         boolean status = userService.resetPassword(form);
@@ -110,7 +110,7 @@ public class SystemUserController extends BaseController {
 
     @PostMapping("/password/update")
 //    @ApiOperation(value = "修改密码", notes = "修改密码接口")
-    public ResponseDTO<Boolean> updatePassword(@RequestBody UserForm.UpdatePassword form) {
+    public ResponseDTO<Boolean> updatePassword(@RequestBody SysUserForm.UpdatePassword form) {
         log.info("收到请求->修改密码:[{}]", form);
         super.validate(form, Groups.IsUpdatePassword.class);
         boolean status = userService.updatePassword(form);

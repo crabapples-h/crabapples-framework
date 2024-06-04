@@ -8,7 +8,7 @@ import cn.crabapples.system.sysRole.SysRole;
 import cn.crabapples.system.sysRole.RolesForm;
 import cn.crabapples.system.sysRoleMenu.SystemRoleMenusService;
 import cn.crabapples.system.sysRole.service.SystemRolesService;
-import cn.crabapples.system.sysUser.SystemUserService;
+import cn.crabapples.system.sysUser.service.SystemUserService;
 import cn.crabapples.system.sysUser.entity.SysUser;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.extern.slf4j.Slf4j;

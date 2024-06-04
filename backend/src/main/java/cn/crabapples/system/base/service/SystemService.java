@@ -1,7 +1,7 @@
 package cn.crabapples.system.base.service;
 
 import cn.crabapples.common.base.BaseService;
-import cn.crabapples.system.sysUser.UserForm;
+import cn.crabapples.system.sysUser.form.SysUserForm;
 
 import java.util.List;
 
@@ -14,9 +14,9 @@ import java.util.List;
  * qq 294046317
  * pc-name 29404
  */
-public interface SystemService extends BaseService {
+public interface SystemService  {
 
-    String login(UserForm form);
+    String login(SysUserForm form);
 
     List<String> getUserPermissions();
 
