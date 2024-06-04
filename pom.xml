@@ -63,6 +63,17 @@
                 <artifactId>embedded-redis</artifactId>
                 <version>0.6</version>
             </dependency>
+            <!--mybatis-flex-->
+            <dependency>
+                <groupId>com.mybatis-flex</groupId>
+                <artifactId>mybatis-flex-spring-boot-starter</artifactId>
+                <version>1.6.3</version>
+            </dependency>
+            <dependency>
+                <groupId>com.mybatis-flex</groupId>
+                <artifactId>mybatis-flex-processor</artifactId>
+                <scope>provided</scope>
+            </dependency>
             <!--            <dependency>-->
             <!--                <groupId>org.springframework.cloud</groupId>-->
             <!--                <artifactId>spring-cloud-dependencies</artifactId>-->
