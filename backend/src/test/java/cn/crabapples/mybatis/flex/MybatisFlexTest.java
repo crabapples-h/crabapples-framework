@@ -1,8 +1,8 @@
 //package cn.crabapples.mybatis.flex;
 //
-//import cn.crabapples.system.dao.MenusDAO;
-//import cn.crabapples.system.entity.SysMenu;
-//import cn.crabapples.system.entity.SysRole;
+//import cn.crabapples.system.sysMenu.MenusDAO;
+//import cn.crabapples.system.sysMenu.SysMenu;
+//import cn.crabapples.system.sysRole.SysRole;
 //import com.mybatisflex.core.query.QueryChain;
 //import com.mybatisflex.core.query.QueryColumn;
 //import lombok.extern.slf4j.Slf4j;

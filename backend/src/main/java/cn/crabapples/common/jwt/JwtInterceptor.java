@@ -41,7 +41,7 @@ public class JwtInterceptor implements HandlerInterceptor {
                 return true;
             }
         }
-        if (HttpMethod.OPTIONS.equals(request.getMethod())) {
+        if (HttpMethod.OPTIONS.name().equals(request.getMethod())) {
             response.setStatus(HttpServletResponse.SC_OK);
             return true;
         }

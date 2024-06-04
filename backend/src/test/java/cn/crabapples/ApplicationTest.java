@@ -1,8 +1,8 @@
 package cn.crabapples;
 
 import cn.crabapples.common.ResponseDTO;
-import cn.crabapples.system.entity.SysRole;
-import com.alibaba.fastjson.JSONObject;
+import cn.crabapples.system.sysRole.SysRole;
+import com.alibaba.fastjson2.JSONObject;
 import com.mysql.cj.jdbc.JdbcConnection;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Assert;

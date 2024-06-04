@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.crabapples.system.sysArea.dao.mybatis.mapper.SysAreaMapper">
+    <resultMap id="areaTree" type="cn.crabapples.system.sysArea.entity.SysArea">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="parent_code" property="parentCode"/>
+        <result column="name" property="name"/>
+        <result column="lvl" property="lvl"/>
+        <collection property="children" column="code" ofType="cn.crabapples.system.sysArea.entity.SysArea" select="getAreaTreeChildren"/>
+    </resultMap>
+    <select id="getAreaTree1" resultMap="areaTree">
+        WITH RECURSIVE area_recursive AS (
+            SELECT * FROM sys_area WHERE parent_code IS NULL
+            UNION ALL
+            SELECT sa.* FROM sys_area sa
+                                 INNER JOIN area_recursive ar ON sa.parent_code = ar.code
+        )
+        SELECT * FROM area_recursive ORDER BY code;
+    </select>
+
+    <select id="getAreaTree" resultMap="areaTree">
+        SELECT * FROM sys_area WHERE parent_code IS NULL
+    </select>
+    <select id="getAreaTreeChildren" resultMap="areaTree" >
+        SELECT *
+        FROM sys_area
+        WHERE parent_code = #{code}
+    </select>
+</mapper>

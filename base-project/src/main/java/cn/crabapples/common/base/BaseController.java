@@ -27,7 +27,7 @@ public abstract class BaseController {
      *
      * @param object 需要验证的对象
      */
-    protected final void validator(Object object, Class<?>... groups) {
+    protected final void validate(Object object, Class<?>... groups) {
         Set<ConstraintViolation<Object>> constraintViolations = validator.validate(object, groups);
         for (ConstraintViolation constraintViolation : constraintViolations) {
             throw new ApplicationException(constraintViolation.getMessageTemplate());

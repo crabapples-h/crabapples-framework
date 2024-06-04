@@ -1,7 +1,7 @@
 package cn.crabapples.common.base;
 
 import cn.crabapples.common.dic.DIC;
-import cn.crabapples.system.entity.SysMenu;
+import cn.crabapples.system.sysMenu.SysMenu;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * qq 294046317
  * pc-name mrhe
  */
-public interface BaseService {
+public interface BaseService<T> {
     /**
      * 将菜单树中标记为删除的去除
      */
