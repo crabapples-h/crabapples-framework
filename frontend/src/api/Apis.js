@@ -10,6 +10,7 @@ const SysApis = {
 
   //用户 user
   userPage: '/api/system/user/page',
+  userPageV2: '/api/system/user/pageV2',
   userList: '/api/system/user/list',
   delUser: '/api/system/user/del',
   lockUser: '/api/system/user/lock',

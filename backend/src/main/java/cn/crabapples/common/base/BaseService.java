@@ -1,6 +1,6 @@
 package cn.crabapples.common.base;
 
-import cn.crabapples.common.dic.DIC;
+import cn.crabapples.common.DIC;
 import cn.crabapples.system.sysMenu.entity.SysMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
 

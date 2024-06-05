@@ -1,11 +1,11 @@
 <template>
-  <a-drawer title="添加用户" width="30%" :visible="visible" @close="closeForm">
-    <a-form-model :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol" ref="userForm">
+  <a-drawer :title="title" width="30%" :visible="visible" @close="closeForm">
+    <a-form-model :model="form" :rules="rules" :label-col="labelCol" :wrapper-col="wrapperCol" ref="form">
       <a-form-model-item label="id" prop="id" style="display: none">
         <a-input v-model="form.id" disabled placeholder="新建时自动生成"/>
       </a-form-model-item>
       <a-form-model-item label="用户名" prop="username">
-        <a-input v-model="form.username" :disabled="isEdit" placeholder="请输入用户名" />
+        <a-input v-model="form.username" :disabled="!!form.id" placeholder="请输入用户名"/>
       </a-form-model-item>
       <a-form-model-item label="姓名" prop="name">
         <a-input v-model="form.name" placeholder="请输入姓名"/>
@@ -32,9 +32,9 @@
 
 <script>
 
-import { SysApis } from '@/api/Apis'
+import {SysApis} from '@/api/Apis'
 import SystemMinix from '@/minixs/SystemMinix'
-import { checkValidate } from 'ant-design-vue/lib/_util/moment-util'
+import {checkValidate} from 'ant-design-vue/lib/_util/moment-util'
 
 export default {
   name: 'user-add',
@@ -47,13 +47,13 @@ export default {
     cancel: {
       type: Function,
     },
-    isEdit: {
-      type: Boolean,
-      default: false
+    title: {
+      type: String,
+      default: '标题'
     },
   },
   watch: {
-    isEdit(nowValue, oldValue) {
+    visible(nowValue, oldValue) {
       if (nowValue) {
         this.loadUserRoles()
       }
@@ -63,27 +63,27 @@ export default {
     return {
       rules: {
         username: [
-          { required: true, message: '请输入用户名', trigger: 'change' },
-          { min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change' },
-          { whitespace: true, message: '请输入用户名', trigger: 'change' },
-          { validator: this.checkUsername, message: '用户名已经存在', trigger: 'change' }
+          {required: true, message: '请输入用户名', trigger: 'change'},
+          {min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change'},
+          {whitespace: true, message: '请输入用户名', trigger: 'change'},
+          {validator: this.checkUsername, message: '用户名已经存在', trigger: 'change'}
         ],
         name: [
-          { required: true, message: '请输入名称', trigger: 'change' },
-          { min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change' },
-          { whitespace: true, message: '请输入名称', trigger: 'change' }
+          {required: true, message: '请输入名称', trigger: 'change'},
+          {min: 2, max: 16, message: '长度为2-16个字符', trigger: 'change'},
+          {whitespace: true, message: '请输入名称', trigger: 'change'}
         ],
         age: [
-          { required: true, message: '请输入年龄', trigger: 'change' },
+          {required: true, message: '请输入年龄', trigger: 'change'},
         ],
         mail: [
-          { required: true, message: '请输入邮箱', trigger: 'change' },
-          { whitespace: true, message: '请输入邮箱', trigger: 'change' }
+          {required: true, message: '请输入邮箱', trigger: 'change'},
+          {whitespace: true, message: '请输入邮箱', trigger: 'change'}
         ],
         phone: [
-          { required: true, message: '请输入电话', trigger: 'change' },
-          { whitespace: true, message: '请输入电话', trigger: 'change' },
-          { min: 8, max: 16, message: '长度为8-16个字符', trigger: 'change' },
+          {required: true, message: '请输入电话', trigger: 'change'},
+          {whitespace: true, message: '请输入电话', trigger: 'change'},
+          {min: 8, max: 16, message: '长度为8-16个字符', trigger: 'change'},
         ],
       },
       columns: [
@@ -122,12 +122,12 @@ export default {
           dataIndex: 'status',
           title: '状态',
           key: 'status',
-          scopedSlots: { customRender: 'status' }
+          scopedSlots: {customRender: 'status'}
         },
         {
           title: '操作',
           key: 'action',
-          scopedSlots: { customRender: 'action' },
+          scopedSlots: {customRender: 'action'},
         },
       ],
       roleOptions: [],
@@ -151,14 +151,14 @@ export default {
           return
         }
         this.roleOptions = result.data.map(e => {
-          return { label: e.name, value: e.id }
+          return {label: e.name, value: e.id}
         })
       }).catch(function (error) {
         console.error('出现错误:', error)
       })
     },
     loadUserRoles() {
-      this.$http.get(`${this.url.userRoles}/${this.form.id.id}`).then(result => {
+      this.$http.get(`${this.url.userRoles}/${this.form.id}`).then(result => {
         if (result.status !== 200) {
           this.$message.error(result.message)
           return
@@ -171,13 +171,11 @@ export default {
       })
     },
     closeForm() {
-      this.form = {
-        roleList: []
-      }
+      this.form = {roleList: []}
       this.$emit('cancel')
     },
     submit() {
-      this.$refs.userForm.validate(valid => {
+      this.$refs.form.validate(valid => {
         if (valid) {
           this.$http.post(this.url.save, this.form).then(result => {
             if (result.status !== 200) {
@@ -192,14 +190,18 @@ export default {
       })
     },
     checkUsername(rule, value, callback) {
-      this.$http.get(`${SysApis.checkUsername}/${value}`).then(result => {
-        if (result.status !== 200) {
-          callback(new Error('用户名已经存在'));
-        }
+      if (!this.form.id) {
+        this.$http.get(`${SysApis.checkUsername}/${value}`).then(result => {
+          if (result.status !== 200) {
+            callback(new Error('用户名已经存在'));
+          }
+          callback();
+        }).catch(function (error) {
+          console.error('出现错误:', error)
+        })
+      } else {
         callback();
-      }).catch(function (error) {
-        console.error('出现错误:', error)
-      })
+      }
     },
   }
 }
@@ -207,14 +209,14 @@ export default {
 
 <style scoped>
 .drawer-bottom-button {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    border-top: 1px solid #e9e9e9;
-    padding: 10px 16px;
-    background: #fff;
-    text-align: right;
-    z-index: 1;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #e9e9e9;
+  padding: 10px 16px;
+  background: #fff;
+  text-align: right;
+  z-index: 1;
 }
 </style>

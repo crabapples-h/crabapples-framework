@@ -20,7 +20,6 @@ mybatis-plus.mapper-locations:
   - classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
   - classpath*:cn/crabapples/**/**/dao/mybatis/xml/*.xml
   - classpath*:cn/crabapples/**/**/**/dao/mybatis/xml/*.xml
-  - classpath*:cn/crabapples/system/sysRole/dao/mybatis/xml/SysRolesMapper.xml
 mybatis-flex.mapper-locations:
   - classpath*:mapper/*.xml
   - classpath*:cn/crabapples/**/dao/mybatis/xml/*.xml
