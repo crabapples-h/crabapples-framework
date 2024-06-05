@@ -12,6 +12,7 @@
         <module name="turing-api" />
         <module name="mail-sender" />
         <module name="file-utils" />
+        <module name="backend" />
         <module name="redis-server" />
         <module name="image-utils" />
       </profile>

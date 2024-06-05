@@ -12,7 +12,7 @@
         <dependencies>
             <dependency>
                 <groupId>cn.crabapples</groupId>
-                <artifactId>crabapples-framework-parent</artifactId>
+                <artifactId>crabapples-framework</artifactId>
                 <version>1.0.1</version>
                 <type>pom</type>
                 <scope>import</scope>
@@ -53,8 +53,6 @@
         <!--            <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>-->
         <!--            <version>2.0.4</version>-->
         <!--        </dependency>-->
-
-
         <dependency>
             <groupId>org.mybatis.generator</groupId>
             <artifactId>mybatis-generator-core</artifactId>
@@ -67,7 +65,6 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.2</version>
         </dependency>
-
 
 
         <!-- 添加已适配 springboot 3 的 mybatis-spring 依赖-->
@@ -197,7 +194,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-<!--                <version>${maven-compiler-plugin.version}</version>-->
+                <!--                <version>${maven-compiler-plugin.version}</version>-->
                 <configuration>
                     <source>8</source>
                     <target>8</target>

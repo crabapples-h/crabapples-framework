@@ -37,7 +37,7 @@
         <dependencies>
             <dependency>
                 <groupId>cn.crabapples</groupId>
-                <artifactId>crabapples-framework-parent</artifactId>
+                <artifactId>crabapples-framework</artifactId>
                 <version>1.0.1</version>
                 <type>pom</type>
                 <scope>import</scope>
