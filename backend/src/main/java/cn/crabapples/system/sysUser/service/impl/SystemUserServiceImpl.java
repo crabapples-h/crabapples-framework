@@ -80,6 +80,10 @@ public class SystemUserServiceImpl implements SystemUserService {
     public IPage<SysUserDTO> findAll(Integer pageIndex, Integer pageSize, SysUserForm form) {
         return userDAO.findAll(pageIndex, pageSize, form);
     }
+    @Override
+    public IPage<SysUser> findAllV2(Integer pageIndex, Integer pageSize, SysUserForm form) {
+        return userDAO.findAllV2(pageIndex, pageSize, form);
+    }
 
     @Override
     public List<SysUserDTO> findAll(SysUserForm form) {

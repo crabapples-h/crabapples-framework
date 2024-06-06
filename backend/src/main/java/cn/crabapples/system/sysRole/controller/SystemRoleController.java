@@ -1,5 +1,6 @@
 package cn.crabapples.system.sysRole.controller;
 
+import cn.crabapples.common.DIC;
 import cn.crabapples.common.ResponseDTO;
 import cn.crabapples.common.base.BaseController;
 import cn.crabapples.system.sysRole.dto.SysRolesDTO;
@@ -85,22 +86,22 @@ public class SystemRoleController extends BaseController {
      * 保存角色
      */
     @PostMapping("/save")
-    public ResponseDTO<Object> saveRoles(@RequestBody RolesForm form) {
+    public ResponseDTO<Boolean> saveRoles(@RequestBody RolesForm form) {
         log.info("收到请求->保存角色:[{}]", form);
-        rolesService.saveRoles(form);
+        boolean status = rolesService.saveRoles(form);
         log.info("返回结果->保存角色成功");
-        return new ResponseDTO<>();
+        return new ResponseDTO<>(DIC.BASE_SUCCESS_MESSAGE, status);
     }
 
     /**
      * 删除角色
      */
     @PostMapping("/remove/{id}")
-    public ResponseDTO<Object> removeRoles(@PathVariable String id) {
+    public ResponseDTO<Boolean> removeRoles(@PathVariable String id) {
         log.info("收到请求->删除角色:[{}]", id);
-        rolesService.removeRoles(id);
+        boolean status = rolesService.removeRoles(id);
         log.info("返回结果->删除角色成功");
-        return new ResponseDTO<>();
+        return new ResponseDTO<>(DIC.BASE_SUCCESS_MESSAGE, status);
     }
 
 }

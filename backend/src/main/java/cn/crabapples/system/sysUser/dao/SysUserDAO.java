@@ -1,6 +1,6 @@
 package cn.crabapples.system.sysUser.dao;
 
-import cn.crabapples.common.dic.DIC;
+import cn.crabapples.common.DIC;
 import cn.crabapples.system.sysUser.dao.mybatis.mapper.SysUserMapper;
 import cn.crabapples.system.sysUser.dto.SysUserDTO;
 import cn.crabapples.system.sysUser.entity.SysUser;
@@ -30,6 +30,11 @@ public class SysUserDAO extends ServiceImpl<SysUserMapper, SysUser> {
         BeanUtils.copyProperties(sysUserList, dtoPage);
         dtoPage.setRecords(collect);
         return dtoPage;
+    }
+
+    public IPage<SysUser> findAllV2(Integer pageIndex, Integer pageSize, SysUserForm form) {
+        Page<SysUser> page = Page.of(pageIndex, pageSize);
+        return baseMapper.selectPage(page, new QueryWrapper<>(form.toEntity()));
     }
 
     public List<SysUserDTO> findAll(SysUserForm form) {

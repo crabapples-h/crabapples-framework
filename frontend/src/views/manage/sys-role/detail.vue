@@ -19,8 +19,8 @@
 
 <script>
 import SystemMinix from '@/minixs/SystemMinix'
-import { buildTree } from '@/utils/ListUtils'
-import { SysApis } from '@/api/Apis'
+import {buildTree} from '@/utils/ListUtils'
+import {SysApis} from '@/api/Apis'
 
 export default {
   name: 'role-detail',
@@ -33,16 +33,8 @@ export default {
     cancel: {
       type: Function,
     },
-    roleId: {
-      type: String,
-      default: false
-    },
   },
-  watch: {
-    roleId(nowValue, oldValue) {
-      this.loadDetail()
-    }
-  },
+  watch: {},
   data() {
     return {
       columns: [
@@ -54,7 +46,7 @@ export default {
         {
           dataIndex: 'icon',
           title: '图标',
-          scopedSlots: { customRender: 'icon' },
+          scopedSlots: {customRender: 'icon'},
           key: 'id'
         },
         {
@@ -66,7 +58,7 @@ export default {
         {
           dataIndex: 'type',
           title: '类型',
-          scopedSlots: { customRender: 'type' },
+          scopedSlots: {customRender: 'type'},
         },
       ],
       replaceFields: {
@@ -96,14 +88,14 @@ export default {
 
 <style scoped>
 .drawer-bottom-button {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    border-top: 1px solid #e9e9e9;
-    padding: 10px 16px;
-    background: #fff;
-    text-align: right;
-    z-index: 1;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #e9e9e9;
+  padding: 10px 16px;
+  background: #fff;
+  text-align: right;
+  z-index: 1;
 }
 </style>

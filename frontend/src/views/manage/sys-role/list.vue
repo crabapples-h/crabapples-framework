@@ -4,7 +4,7 @@
     <a-divider/>
     <add-role :visible="show.add" @cancel="closeAdd" ref="addForm"/>
     <add-role :visible="show.edit" @cancel="closeEdit" ref="editForm"/>
-    <role-detail :visible="show.detail" @cancel="closeDetail" :role-id="detailId" ref="detail"/>
+    <role-detail :visible="show.detail" @cancel="closeDetail" ref="detailForm"/>
     <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="pagination">
       <span slot="action" slot-scope="text, record">
         <template v-auth:sys:roles:del>
@@ -49,16 +49,11 @@ export default {
           width: '50%'
         },
       ],
-      show: {
-        add: false,
-        detail: false,
-        edit: false,
-      },
       url: {
         list: SysApis.rolePage,
         delete: SysApis.delRoles,
+        roleMenus: SysApis.roleMenus,
       },
-      detailId: ''
     }
   },
   activated() {
@@ -66,35 +61,26 @@ export default {
   mounted() {
   },
   methods: {
-    showAdd() {
-      this.show.add = true
-    },
     closeAdd() {
       this.show.add = false
+      this.refreshData()
+      commonApi.refreshSysData()
     },
-    closeForm() {
-      this.show.add = false
+    closeEdit() {
       this.show.edit = false
       this.refreshData()
       commonApi.refreshSysData()
     },
-    showEdit(e) {
-      this.$refs.editForm.form = e
-      this.show.edit = true
-    },
-    closeEdit() {
-      this.$refs.editForm.form = {}
-      this.show.edit = false
-    },
     showDetail(e) {
-      console.log(e)
-      this.detailId = e.id
-      this.show.detail = true
+      let url = `${this.url.roleMenus}/${e.id}`
+      console.log(url)
+      this.$http.get(url).then(result => {
+        console.log(result.data)
+        let dataSource = buildTree(result.data, '')
+        console.log(dataSource)
+        this.show.detail = true
+      })
     },
-    closeDetail() {
-      this.show.detail = false
-    },
-
   }
 }
 </script>

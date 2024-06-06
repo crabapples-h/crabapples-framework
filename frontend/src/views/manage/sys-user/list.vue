@@ -2,7 +2,8 @@
   <div>
     <a-button @click="showAdd" v-auth:sys:user:add>添加用户</a-button>
     <a-divider/>
-    <add-user :visible="show.add" @cancel="closeForm" :is-edit="show.edit" ref="addUser"/>
+    <add-user title="添加" :visible="show.add" @cancel="closeAdd" ref="addForm"/>
+    <add-user title="编辑" :visible="show.edit" @cancel="closeEdit" ref="editForm"/>
     <change-password :visible="show.changePassword" @cancel="closeChangePasswordForm" :user-id="userId"
                      ref="changePassword"/>
     <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="pagination">
@@ -30,7 +31,7 @@
 
 <script>
 
-import { SysApis } from '@/api/Apis'
+import {SysApis} from '@/api/Apis'
 import SystemMinix from '@/minixs/SystemMinix'
 import AddUser from '@/views/manage/sys-user/add.vue'
 import ChangePassword from '@/views/manage/sys-user/change-password.vue'
@@ -79,12 +80,12 @@ export default {
           dataIndex: 'status',
           title: '状态',
           key: 'status',
-          scopedSlots: { customRender: 'status' }
+          scopedSlots: {customRender: 'status'}
         },
         {
           title: '操作',
           key: 'action',
-          scopedSlots: { customRender: 'action' },
+          scopedSlots: {customRender: 'action'},
         },
       ],
       roleOptions: [],
@@ -95,7 +96,7 @@ export default {
         changePassword: false,
       },
       url: {
-        list: SysApis.userPage,
+        list: SysApis.userPageV2,
         lock: SysApis.lockUser,
         unlock: SysApis.unlockUser,
         delete: SysApis.delUser,
@@ -108,19 +109,17 @@ export default {
   mounted() {
   },
   methods: {
-    showAdd() {
-      this.show.add = true
-    },
+
     closeForm() {
       this.show.add = false
       this.show.edit = false
       this.refreshData()
     },
-    showEdit(e) {
-      this.$refs.addUser.form = e
-      this.show.add = true
-      this.show.edit = true
-    },
+    // showEdit(e) {
+    //   this.$refs.addUser.form = e
+    //   this.show.add = true
+    //   this.show.edit = true
+    // },
     showChangePassword(e) {
       this.userId = e.id
       this.show.changePassword = true
@@ -162,14 +161,14 @@ export default {
 
 <style scoped>
 .drawer-bottom-button {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    border-top: 1px solid #e9e9e9;
-    padding: 10px 16px;
-    background: #fff;
-    text-align: right;
-    z-index: 1;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #e9e9e9;
+  padding: 10px 16px;
+  background: #fff;
+  text-align: right;
+  z-index: 1;
 }
 </style>

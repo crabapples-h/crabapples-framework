@@ -32,7 +32,7 @@ public class SystemRolesMenusServiceImpl implements SystemRoleMenusService {
 
     private List<SysMenu> listToTree(List<SysMenu> list) {
         for (SysMenu sysMenu : list) {
-
+            System.err.println(sysMenu);
         }
         return list;
     }

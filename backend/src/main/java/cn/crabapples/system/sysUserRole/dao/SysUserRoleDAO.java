@@ -19,6 +19,7 @@ public class SysUserRoleDAO extends ServiceImpl<SysUserRoleMapper, SysUserRole> 
         baseMapper.deleteUserRoles(userId);
         if (!roleList.isEmpty())
             roleList.forEach(e -> {
+                System.err.println(e);
                 baseMapper.saveUserRoles(userId, e);
             });
     }

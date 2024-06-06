@@ -10,14 +10,14 @@
       </a-form-model-item>
       <a-form-model-item label="菜单">
         <a-tree-select
+            v-if="false"
             :tree-data="menusOptions"
             v-model="form.hasMenusIds"
             tree-checkable
             :show-checked-strategy="SHOW_TYPE"
             :show-line="show.treeLine"
             :checkStrictly="false"
-            :replace-fields="replaceFields"
-            v-if="false"/>
+            :replace-fields="replaceFields"/>
         <a-tree
             v-model="form.menuList"
             :checkable="true"
@@ -85,7 +85,6 @@ export default {
       form: {
         menuList: []
       },
-      allMenuList: [],
     }
   },
   activated() {
@@ -113,9 +112,6 @@ export default {
         }
         if (result.data !== null) {
           this.menusOptions = result.data
-          this.allMenuList = this.tree2list(this.menusOptions).sort((a, b) => {
-            return b.sort - a.sort
-          })
         }
       }).catch(function (error) {
         console.error('出现错误:', error)

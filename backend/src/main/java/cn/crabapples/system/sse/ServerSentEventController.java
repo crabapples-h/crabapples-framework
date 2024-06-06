@@ -40,7 +40,6 @@ public class ServerSentEventController {
                 e.printStackTrace();
             }
         }).start();
-
         return sseEmitter;
     }
 
