@@ -9,7 +9,8 @@ logging:
   level:
     root: info
     druid.sql: warn
-    com.baomidou.example.mapper: debug
+#    cn.crabapples.*.dao.mybatis: debug
+
 spring:
   #----- jpa config -----
   jpa.show-sql: false

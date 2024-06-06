@@ -10,6 +10,7 @@ import '@public/color.less'
 import '@/utils/permission'
 import storage from '@/store/storage'
 import VueCanvasPoster from 'vue-canvas-poster'
+import "driver.js/dist/driver.css";
 
 Vue.use(VueCanvasPoster)
 

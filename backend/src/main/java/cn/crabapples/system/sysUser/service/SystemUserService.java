@@ -29,6 +29,7 @@ public interface SystemUserService extends BaseService<SysUser> {
     SysUser findByUsername(String username);
 
     IPage<SysUserDTO> findAll(Integer pageIndex, Integer pageSize, SysUserForm form);
+
     IPage<SysUser> findAllV2(Integer pageIndex, Integer pageSize, SysUserForm form);
 
     List<SysUserDTO> findAll(SysUserForm form);

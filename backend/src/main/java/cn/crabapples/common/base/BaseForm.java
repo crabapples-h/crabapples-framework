@@ -9,9 +9,6 @@ import java.time.LocalDateTime;
 @Setter
 public abstract class BaseForm<T extends BaseEntity<T>> {
     protected String id;
-    protected Integer pageIndex;
-    protected Integer pageSize;
-    protected LocalDateTime createTime;
 
     public abstract T toEntity();
 }

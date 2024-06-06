@@ -1,15 +1,19 @@
 <template>
   <div class="loginApi-bg">
     <div class="loginApi-div">
-      <div class="title">用户登录</div>
-      <a-input autocomplete="off" placeholder="用户名" type="text" v-model="username" class="input-text"></a-input>
-      <a-input autocomplete="off" placeholder="密码" type="password" v-model="password" class="input-text"></a-input>
-      <a-button style="width:100%;" type="primary" @click="submit" class="loginApi-button">立即登录</a-button>
+      <div class="title" id="login-title">用户登录</div>
+      <a-input id="login-username" autocomplete="off" placeholder="用户名" type="text" v-model="username"
+               class="input-text"></a-input>
+      <a-input id="login-password" autocomplete="off" placeholder="密码" type="password" v-model="password"
+               class="input-text"></a-input>
+      <a-button id="login-button" style="width:100%;" type="primary" @click="submit" class="loginApi-button">立即登录
+      </a-button>
     </div>
   </div>
 </template>
 
 <script>
+import {driver} from "driver.js";
 
 export default {
   name: 'Login',
@@ -22,6 +26,37 @@ export default {
   activated() {
   },
   mounted() {
+    const driverObj = driver({
+      showProgress: true,
+      animate: true,
+      allowClose: false,
+      // overlayColor: 'pink',
+      // overlayOpacity:'0.5'
+    });
+    driverObj.setSteps([
+      {
+        element: '#login-title',
+        popover: {
+          title: '第一步',
+          description: '这是第一步',
+          prevBtnText: '上一步',
+          nextBtnText: '下一步'
+        }
+      },
+      {
+        element: '#login-username',
+        popover: {title: '第二步', description: '这是第二步', prevBtnText: '上一步', nextBtnText: '下一步'}
+      },
+      {
+        element: '#login-password',
+        popover: {title: '第三步', description: '这是第三步', prevBtnText: '上一步', nextBtnText: '下一步'}
+      },
+      {
+        element: '#login-button',
+        popover: {title: '第四步', description: '这是第四步', prevBtnText: '上一步', nextBtnText: '完成'}
+      },
+    ])
+    // driverObj.drive();
   },
   methods: {
     submit() {

@@ -86,50 +86,6 @@ export default {
           {min: 8, max: 16, message: '长度为8-16个字符', trigger: 'change'},
         ],
       },
-      columns: [
-        {
-          dataIndex: 'username',
-          key: 'username',
-          title: '用户名',
-        },
-        {
-          dataIndex: 'name',
-          title: '姓名',
-          key: 'name',
-        },
-        {
-          dataIndex: 'age',
-          title: '年龄',
-          key: 'age',
-        },
-        {
-          dataIndex: 'gender_dictValue',
-          title: '性别',
-          key: 'gender',
-        },
-        {
-          dataIndex: 'mail',
-          title: '邮箱',
-          key: 'mail',
-        },
-
-        {
-          dataIndex: 'phone',
-          title: '电话',
-          key: 'phone',
-        },
-        {
-          dataIndex: 'status',
-          title: '状态',
-          key: 'status',
-          scopedSlots: {customRender: 'status'}
-        },
-        {
-          title: '操作',
-          key: 'action',
-          scopedSlots: {customRender: 'action'},
-        },
-      ],
       roleOptions: [],
       url: {
         save: SysApis.saveUser,

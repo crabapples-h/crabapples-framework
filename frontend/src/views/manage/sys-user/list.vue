@@ -2,11 +2,21 @@
   <div>
     <a-button @click="showAdd" v-auth:sys:user:add>添加用户</a-button>
     <a-divider/>
+    <div style="padding: 0 0 16px;display: flex;flex-wrap: wrap">
+      <a-input v-model="queryParam.name" placeholder="输入名称搜索" style="width: 200px"/>
+      <a-select v-model="queryParam.storeId" placeholder="选择性别搜索" style="margin-left: 12px;width: 200px">
+        <a-select-option :value="1">男</a-select-option>
+        <a-select-option :value="2">女</a-select-option>
+      </a-select>
+      <a-button @click="getList" style="margin-left: 12px" type="primary">搜索</a-button>
+      <a-button @click="resetGetList" style="margin-left: 12px">重置</a-button>
+    </div>
     <add-user title="添加" :visible="show.add" @cancel="closeAdd" ref="addForm"/>
     <add-user title="编辑" :visible="show.edit" @cancel="closeEdit" ref="editForm"/>
     <change-password :visible="show.changePassword" @cancel="closeChangePasswordForm" :user-id="userId"
                      ref="changePassword"/>
-    <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="pagination">
+    <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="pagination"
+             :scroll="{x:true}" style="overflow-x: hidden">
       <template #status="value,record">
         <a-tag color="green" v-if="value === 0">正常</a-tag>
         <a-tag color="red" v-else>锁定</a-tag>
@@ -22,6 +32,7 @@
           <a-divider type="vertical"/>
           <a-button @click="showChangePassword(record)" size="small">修改密码</a-button>
           <a-button @click="showChangePassword(record)" v-auth:sys:user:change-password>修改密码</a-button>
+          <a-divider type="vertical"/>
         </template>
         <a-button type="primary" size="small" @click="showEdit(record)" v-auth:sys:user:edit>编辑</a-button>
       </template>
@@ -47,44 +58,41 @@ export default {
       columns: [
         {
           dataIndex: 'username',
-          key: 'username',
           title: '用户名',
         },
         {
           dataIndex: 'name',
           title: '姓名',
-          key: 'name',
         },
         {
           dataIndex: 'age',
           title: '年龄',
-          key: 'age',
         },
         {
           dataIndex: 'gender_dictValue',
           title: '性别',
-          key: 'gender',
+        },
+        {
+          dataIndex: 'gender',
+          title: '性别',
         },
         {
           dataIndex: 'mail',
           title: '邮箱',
-          key: 'mail',
         },
 
         {
           dataIndex: 'phone',
           title: '电话',
-          key: 'phone',
         },
         {
           dataIndex: 'status',
           title: '状态',
-          key: 'status',
           scopedSlots: {customRender: 'status'}
         },
         {
-          title: '操作',
           key: 'action',
+          title: '操作',
           scopedSlots: {customRender: 'action'},
         },
       ],

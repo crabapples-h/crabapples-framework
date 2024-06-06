@@ -15,11 +15,9 @@ import java.util.Objects;
 @Component
 public class MybatisPlusAutoFillHandler implements MetaObjectHandler {
     private final JwtTokenUtils jwtTokenUtils;
-    private final HttpServletRequest request;
 
     public MybatisPlusAutoFillHandler(JwtTokenUtils jwtTokenUtils, HttpServletRequest request) {
         this.jwtTokenUtils = jwtTokenUtils;
-        this.request = request;
     }
 
     @Override
@@ -27,20 +25,30 @@ public class MybatisPlusAutoFillHandler implements MetaObjectHandler {
         log.info("开始填充 insert 数据 ....");
         this.strictInsertFill(metaObject, "createTime", LocalDateTime.class, LocalDateTime.now()); // 起始版本 3.3.0(推荐使用)
         this.strictInsertFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now()); // 起始版本 3.3.0(推荐使用)
-        SysUser userInfo = getUserInfo();
-        if (Objects.nonNull(userInfo)) {
-            this.strictInsertFill(metaObject, "createBy", String.class, userInfo.getUsername()); // 起始版本 3.3.0(推荐使用)
-        }
+        String userName = getUserInfo();
+        this.strictInsertFill(metaObject, "createBy", String.class, userName); // 起始版本 3.3.0(推荐使用)
+        this.strictInsertFill(metaObject, "updateBy", String.class, userName); // 起始版本 3.3.0(推荐使用)
+        log.info("填充 insert 数据完成");
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
         log.info("开始填充 update 数据 ....");
         this.strictUpdateFill(metaObject, "updateTime", LocalDateTime.class, LocalDateTime.now()); // 起始版本 3.3.0(推荐)
+        String userName = getUserInfo();
+        this.strictInsertFill(metaObject, "updateBy", String.class, userName); // 起始版本 3.3.0(推荐使用)
+        log.info("填充 update 数据完成");
     }
 
-    private SysUser getUserInfo() {
-        String userId = jwtTokenUtils.getUserId();
-        return SysUser.create().selectById(userId);
+    private String getUserInfo() {
+        try {
+            String userId = jwtTokenUtils.getUserId();
+            log.info("填充用户id:[{}]", userId);
+            return SysUser.create().selectById(userId).getUsername();
+        } catch (Exception e) {
+            String defaultStr = "system";
+            log.warn("获取请求头中token失败。可能是来自系统内部调用,自动填充为[{}]", defaultStr);
+            return defaultStr;
+        }
     }
 }
