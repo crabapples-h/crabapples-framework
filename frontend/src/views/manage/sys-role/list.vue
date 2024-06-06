@@ -2,15 +2,19 @@
   <div>
     <a-button @click="showAdd" v-auth:sys:roles:add>添加角色</a-button>
     <a-divider/>
-    <add-role :visible="show.add" @cancel="closeForm" :is-edit="show.edit" ref="addMenu"/>
-    <role-detail :visible="show.detail" @cancel="closeDetail"  :role-id="detailId"  ref="detail"/>
+    <add-role :visible="show.add" @cancel="closeAdd" ref="addForm"/>
+    <add-role :visible="show.edit" @cancel="closeEdit" ref="editForm"/>
+    <role-detail :visible="show.detail" @cancel="closeDetail" :role-id="detailId" ref="detail"/>
     <a-table :data-source="dataSource" rowKey="id" :columns="columns" :pagination="pagination">
-        <span slot="action" slot-scope="text, record">
-        <c-pop-button title="确定要删除吗" text="删除" type="danger" size="small" @click="remove(record)"
-                      v-auth:sys:roles:del/>
-        <a-divider type="vertical" v-auth:sys:roles:del/>
-        <a-button type="primary" size="small" @click="showEdit(record)" v-auth:sys:roles:edit>编辑</a-button>
-        <a-divider type="vertical" v-auth:sys:roles:edit/>
+      <span slot="action" slot-scope="text, record">
+        <template v-auth:sys:roles:del>
+          <c-pop-button title="确定要删除吗" text="删除" type="danger" size="small" @click="remove(record)"/>
+          <a-divider type="vertical"/>
+        </template>
+        <template v-auth:sys:roles:edit>
+          <a-button type="primary" size="small" @click="showEdit(record)">编辑</a-button>
+          <a-divider type="vertical"/>
+        </template>
         <a-button type="primary" size="small" @click="showDetail(record)">查看菜单</a-button>
       </span>
     </a-table>
@@ -19,8 +23,8 @@
 
 <script>
 import commonApi from '@/api/CommonApi'
-import { buildTree } from '@/utils/ListUtils'
-import { SysApis } from '@/api/Apis'
+import {buildTree} from '@/utils/ListUtils'
+import {SysApis} from '@/api/Apis'
 import SystemMinix from '@/minixs/SystemMinix'
 import AddRole from '@/views/manage/sys-role/add.vue'
 import RoleDetail from '@/views/manage/sys-role/detail.vue'
@@ -28,7 +32,7 @@ import RoleDetail from '@/views/manage/sys-role/detail.vue'
 export default {
   name: 'role-list',
   mixins: [SystemMinix],
-  components: { AddRole, RoleDetail },
+  components: {AddRole, RoleDetail},
   data() {
     return {
       columns: [
@@ -41,7 +45,7 @@ export default {
         {
           title: '操作',
           key: 'action',
-          scopedSlots: { customRender: 'action' },
+          scopedSlots: {customRender: 'action'},
           width: '50%'
         },
       ],
@@ -65,6 +69,9 @@ export default {
     showAdd() {
       this.show.add = true
     },
+    closeAdd() {
+      this.show.add = false
+    },
     closeForm() {
       this.show.add = false
       this.show.edit = false
@@ -72,11 +79,15 @@ export default {
       commonApi.refreshSysData()
     },
     showEdit(e) {
-      this.$refs.addMenu.form = e
-      this.show.add = true
+      this.$refs.editForm.form = e
       this.show.edit = true
     },
+    closeEdit() {
+      this.$refs.editForm.form = {}
+      this.show.edit = false
+    },
     showDetail(e) {
+      console.log(e)
       this.detailId = e.id
       this.show.detail = true
     },
@@ -90,14 +101,14 @@ export default {
 
 <style scoped>
 .drawer-bottom-button {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    border-top: 1px solid #e9e9e9;
-    padding: 10px 16px;
-    background: #fff;
-    text-align: right;
-    z-index: 1;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #e9e9e9;
+  padding: 10px 16px;
+  background: #fff;
+  text-align: right;
+  z-index: 1;
 }
 </style>

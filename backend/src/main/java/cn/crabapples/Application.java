@@ -20,6 +20,8 @@ import org.springframework.context.annotation.FilterType;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
 
+import javax.annotation.PreDestroy;
+
 
 /**
  * TODO springBoot主启动类

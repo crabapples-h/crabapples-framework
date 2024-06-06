@@ -16,6 +16,7 @@ public class RedisServerConfigure {
                 .setting("maxmemory 128M") //maxheap 128M
                 .build();
         redisServer.start();
+        redisServer.stop();
         log.info("init inner redis server finish");
         return redisServer;
     }

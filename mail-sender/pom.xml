@@ -29,20 +29,17 @@
         <dependency>
             <groupId>cn.crabapples</groupId>
             <artifactId>base-project</artifactId>
-            <version>1.0.4</version>
         </dependency>
         <!--邮件解析依赖-->
         <dependency>
             <groupId>ch.ethz.ganymed</groupId>
             <artifactId>ganymed-ssh2</artifactId>
-            <version>262</version>
             <scope>compile</scope>
         </dependency>
         <!--邮件发送依赖-->
         <dependency>
             <groupId>javax.mail</groupId>
             <artifactId>mail</artifactId>
-            <version>1.4.7</version>
         </dependency>
     </dependencies>
 

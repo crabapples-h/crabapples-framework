@@ -7,16 +7,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
+//import reactor.core.publisher.Mono;
 
 
 @RestController
 @RequestMapping(value = "/api/banner")
 @Slf4j
 public class FlexController extends BaseController {
-    @GetMapping("/get/list")
-    @JwtIgnore
-    public Mono<ResponseDTO<Object>> getList() {
-        return Mono.create((monoSink) -> monoSink.success(new ResponseDTO<>()));
-    }
+//    @GetMapping("/get/list")
+//    @JwtIgnore
+//    public Mono<ResponseDTO<Object>> getList() {
+//        return Mono.create((monoSink) -> monoSink.success(new ResponseDTO<>()));
+//    }
 }
