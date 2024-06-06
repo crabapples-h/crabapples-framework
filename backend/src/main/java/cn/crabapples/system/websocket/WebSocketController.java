@@ -2,20 +2,21 @@ package cn.crabapples.system.websocket;
 
 import cn.crabapples.common.config.CustomSpringConfigure;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
 
 @Slf4j
 @Component
 @ServerEndpoint(value = "/ws/{sid}", configurator = CustomSpringConfigure.class)
 public class WebSocketController {
-
-    public ConcurrentHashMap<String, Session> webSocketMap = new ConcurrentHashMap<>(16);
+    @Qualifier("webSocketClientMap")
+    private Map<String, Session> webSocketClientMap;
 
     /**
      * 连接建立成功调用的方法
@@ -23,7 +24,7 @@ public class WebSocketController {
     @OnOpen
     public void onOpen(Session session, @PathParam("sid") String sid) {
         log.info("当前连接的id:[{}]", sid);
-        webSocketMap.put(sid, session);
+        webSocketClientMap.put(sid, session);
         sendMessage(session, "连接成功" + sid);
     }
 
@@ -32,7 +33,7 @@ public class WebSocketController {
      */
     @OnClose
     public void onClose(Session session, @PathParam("sid") String sid) {
-        webSocketMap.remove(sid);
+        webSocketClientMap.remove(sid);
         try {
             session.close();
         } catch (IOException e) {
@@ -46,13 +47,13 @@ public class WebSocketController {
     @OnMessage
     public void onMessage(Session session, String message, @PathParam("sid") String sid) {
         log.info("收到消息id:[{}],内容:[{}]", sid, message);
-        webSocketMap.put(sid, session);
+        webSocketClientMap.put(sid, session);
 //        sendMessage(session, "收到来自" + sid + "的信息:" + message);
     }
 
     @OnError
     public void onError(Session session, Throwable error, @PathParam("sid") String sid) {
-        webSocketMap.remove(sid);
+        webSocketClientMap.remove(sid);
         try {
             session.close();
         } catch (IOException e) {

@@ -1,15 +1,18 @@
 package cn.crabapples.system.websocket;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.websocket.Session;
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * TODO webSocketService
  *
  * @author Mr.He
- *  2019/8/5 22:53
+ * 2019/8/5 22:53
  * e-mail crabapples.cn@gmail.com
  * qq 294046317
  * pc-name 29404
@@ -17,18 +20,14 @@ import javax.websocket.Session;
 @Slf4j
 @Service
 public class MessageService {
+    @Qualifier("webSocketClientMap")
+    private Map<String, Session> webSocketClientMap;
 
-    private WebSocketServer webSocketServer;
-
-    public MessageService(WebSocketServer webSocketServer) {
-        this.webSocketServer = webSocketServer;
-    }
-
-    public void sendMessage(String message, String sid) {
-        Session session = webSocketServer.webSocketMap.get(sid);
+    public void sendMessage(String message, String sid) throws IOException {
+        Session session = webSocketClientMap.get(sid);
         if (session == null) {
             return;
         }
-        webSocketServer.sendMessage(session, "发往客户端的消息-->" + message);
+        session.getBasicRemote().sendText("发往客户端的消息-->" + message);
     }
 }

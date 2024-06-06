@@ -1,4 +1,4 @@
-package cn.crabapples.system.sse;
+package cn.crabapples.system.websse;
 
 import cn.crabapples.common.jwt.JwtIgnore;
 import lombok.extern.slf4j.Slf4j;

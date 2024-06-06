@@ -21,6 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
+import javax.websocket.Session;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -65,7 +66,12 @@ public class Application {
 
     @Bean("emitterClientMap")
     public Map<String, SseEmitter> createEmitterClientMap() {
-        return new ConcurrentHashMap<>();
+        return new ConcurrentHashMap<>(16);
+    }
+
+    @Bean("webSocketClientMap")
+    public Map<String, Session> createWebSocketClientMap() {
+        return new ConcurrentHashMap<>(16);
     }
 
     @Bean
