@@ -98,3 +98,8 @@ export default {
   z-index: 1;
 }
 </style>
+
+localhost:9999/videoability/mtbase/store/mtEmployee/setFacePhoto/1782996283654230018?facePhoto=http://localhost:9999/videoability//sys/common/static//s3obj/maotai/%E4%BA%8C%E5%AF%B8%E7%99%BD%E5%BA%952023-%E7%8E%8B%E4%B8%BD_1717579204298.jpg
+localhost:9999/videoability//mtbase/store/mtEmployee/setFacePhoto/1782996283654230018?facePhoto=/s3obj/maotai/%E4%BA%8C%E5%AF%B8%E7%99%BD%E5%BA%952023-%E5%BE%90%E9%83%A6%E9%92%B0_1717645281809.jpg
+
+http://localhost:9999/videoability/mtbase/store/mtEmployee/setFacePhoto/1782996283654230018?facePhoto=/s3obj/maotai/%E4%BA%8C%E5%AF%B8%E7%99%BD%E5%BA%952023-%E7%8E%8B%E4%B8%BD_1717645572408.jpg

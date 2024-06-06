@@ -19,8 +19,10 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import javax.annotation.PreDestroy;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -59,6 +61,11 @@ public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
         logger.info(">>>>>>>>SpringBoot服务启动成功 [jwt] >>>>>>>>>");
+    }
+
+    @Bean("emitterClientMap")
+    public Map<String, SseEmitter> createEmitterClientMap() {
+        return new ConcurrentHashMap<>();
     }
 
     @Bean
