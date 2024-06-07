@@ -32,7 +32,6 @@
 
         <fastjson.version>1.2.47</fastjson.version>
         <fastjson2.version>2.0.46</fastjson2.version>
-        <lombok.version>1.18.18</lombok.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -47,6 +46,55 @@
                 <groupId>cn.crabapples</groupId>
                 <artifactId>mybatis-generator-plugins</artifactId>
                 <version>1.0.3</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.18</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>3.5.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-core</artifactId>
+                <version>1.3.7</version>
+            </dependency>
+            <!-- bytebuddy -->
+            <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy</artifactId>
+                <version>1.14.12</version>
+            </dependency>
+            <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy-agent</artifactId>
+                <version>1.14.12</version>
+            </dependency>
+            <!-- javassist -->
+            <dependency>
+                <groupId>org.javassist</groupId>
+                <artifactId>javassist</artifactId>
+                <version>3.30.2-GA</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.auto.service</groupId>
+                <artifactId>auto-service</artifactId>
+                <version>1.1.1</version>
+            </dependency>
+            <!-- asm -->
+            <dependency>
+                <groupId>org.ow2.asm</groupId>
+                <artifactId>asm</artifactId>
+                <version>9.5</version>
+            </dependency>
+            <!-- jsr310  -->
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis-typehandlers-jsr310</artifactId>
+                <version>1.0.1</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.maven.plugins</groupId>

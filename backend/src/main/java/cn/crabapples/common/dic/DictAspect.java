@@ -1,6 +1,7 @@
 package cn.crabapples.common.dic;
 
 import cn.crabapples.common.ResponseDTO;
+import cn.crabapples.system.sysDict.service.SystemDictService;
 import cn.crabapples.system.sysDict.service.impl.SystemDictServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -12,7 +13,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -64,18 +64,20 @@ public class DictAspect {
         return result;
     }
 
-    // 翻译数据，实现过程在DictEnum枚举中
+    /**
+     * 翻译数据，实现过程在DictEnum枚举中
+     *
+     * @param result 翻译前的数据
+     * @return 翻译后的数据
+     * 实现过程 {@link cn.crabapples.common.dic.DictEnum#fillDictText(RedisTemplate, SystemDictService, Object)}
+     */
     private Object parseDictText(Object result) {
         if (result instanceof ResponseDTO) {
             ResponseDTO responseDTO = (ResponseDTO) result;
             Object data = responseDTO.getData();
-            Field[] declaredFields = data.getClass().getDeclaredFields();
-            for (Field field : declaredFields) {
-                System.err.println(field);
-            }
             DictEnum instance = DictEnum.getInstance(data);
             Object resultData = instance.fillDictText(redisTemplate, dictService, data);
-//            ((ResponseDTO) result).setData(resultData);
+            ((ResponseDTO) result).setData(resultData);
         }
         return result;
     }

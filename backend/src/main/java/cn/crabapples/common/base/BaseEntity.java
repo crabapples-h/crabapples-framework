@@ -9,7 +9,7 @@ import org.springframework.beans.BeanUtils;
 import java.io.Serializable;
 
 /**
- * TODO 实体类基础属性
+ * TODO 实体类基础属性,使用字典翻译功能必须继承此类
  *
  * @author Mr.He
  * 2019/9/21 17:47

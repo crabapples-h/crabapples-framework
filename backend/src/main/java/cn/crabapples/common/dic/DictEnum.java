@@ -8,8 +8,8 @@ import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Type;
@@ -106,16 +106,16 @@ public enum DictEnum {
      * @return 填充后的数据
      */
     private Object fillDictText(RedisTemplate<String, Map<String, String>> redisTemplate,
-                                SystemDictService dictService, Class<?> clazz,
-                                Object item) {
-        for (Field field : ReflectUtils.getAllFields(clazz)) {
+                                SystemDictService dictService, Class<?> clazz, Object item) {
+        Field[] allFields = ReflectUtils.getAllFields(clazz);
+        for (Field field : allFields) {
             try {
                 if (field.getAnnotation(Dict.class) != null) {
                     String code = field.getAnnotation(Dict.class).dictCode();
                     String text = field.getAnnotation(Dict.class).dictText();
                     String table = field.getAnnotation(Dict.class).dictTable();
                     String dictCode = code;
-                    if (!StringUtils.isEmpty(table)) {
+                    if (StringUtils.isNotBlank(table)) {
                         dictCode = String.format("%s,%s,%s", table, text, code);
                     }
                     String fieldName = field.getName();
