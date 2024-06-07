@@ -23,7 +23,6 @@
 
 <script>
 import commonApi from '@/api/CommonApi'
-import {buildTree} from '@/utils/ListUtils'
 import {SysApis} from '@/api/Apis'
 import SystemMinix from '@/minixs/SystemMinix'
 import AddRole from '@/views/manage/sys-role/add.vue'
@@ -71,16 +70,16 @@ export default {
       this.refreshData()
       commonApi.refreshSysData()
     },
-    showDetail(e) {
-      let url = `${this.url.roleMenus}/${e.id}`
-      console.log(url)
-      this.$http.get(url).then(result => {
-        console.log(result.data)
-        let dataSource = buildTree(result.data, '')
-        console.log(dataSource)
-        this.show.detail = true
-      })
-    },
+    // showDetail(e) {
+    //   let url = `${this.url.roleMenus}/${e.id}`
+    //   console.log(url)
+    //   this.$http.get(url).then(result => {
+    //     console.log(result.data)
+    //     let dataSource = buildTree(result.data, '')
+    //     console.log(dataSource)
+    //     this.show.detail = true
+    //   })
+    // },
   }
 }
 </script>

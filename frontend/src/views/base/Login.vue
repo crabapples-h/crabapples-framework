@@ -1,7 +1,7 @@
 <template>
   <div class="loginApi-bg">
     <div class="loginApi-div">
-      <div class="title">用户登录</div>
+      <div class="title" id="login-title">用户登录</div>
       <a-input autocomplete="off" placeholder="用户名" type="text" v-model="username" class="input-text"></a-input>
       <a-input autocomplete="off" placeholder="密码" type="password" v-model="password" class="input-text"></a-input>
       <a-button style="width:100%;" type="primary" @click="submit" class="loginApi-button">立即登录</a-button>
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import {driver} from "driver.js";
 
 export default {
   name: 'Login',
@@ -22,6 +23,17 @@ export default {
   activated() {
   },
   mounted() {
+    const driverObj = driver();
+    driverObj.setSteps([
+      {
+        element: "#login-title",
+        popover: {
+          title: "标题",
+          description: "内容"
+        }
+      }
+    ])
+    driverObj.start();
   },
   methods: {
     submit() {
