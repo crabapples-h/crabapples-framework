@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedHashSet;
 import java.util.Set;
+import com.sun.tools.javac.api.JavacTrees;
 
 @AutoService(Processor.class)
 public class CrabapplesControllerProcessor extends AbstractProcessor {
@@ -30,6 +31,7 @@ public class CrabapplesControllerProcessor extends AbstractProcessor {
     private Filer filer;
     private Messager messager;
     private ClassLoader classLoader;
+    private JavacTrees javacTrees;
 
     //支持的java版本
     @Override
