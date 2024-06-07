@@ -5,10 +5,12 @@ import cn.crabapples.system.sysUser.dao.mybatis.mapper.SysUserMapper;
 import cn.crabapples.system.sysUser.dto.SysUserDTO;
 import cn.crabapples.system.sysUser.entity.SysUser;
 import cn.crabapples.system.sysUser.form.SysUserForm;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
@@ -34,7 +36,10 @@ public class SysUserDAO extends ServiceImpl<SysUserMapper, SysUser> {
 
     public IPage<SysUser> findAllV2(Integer pageIndex, Integer pageSize, SysUserForm form) {
         Page<SysUser> page = Page.of(pageIndex, pageSize);
-        return baseMapper.selectPage(page, new QueryWrapper<>(form.toEntity()));
+        SysUser entity = form.toEntity();
+        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<SysUser>()
+                .like(StringUtils.isNotBlank(entity.getName()), SysUser::getName, entity.getName());
+        return baseMapper.selectPage(page, queryWrapper);
     }
 
     public List<SysUserDTO> findAll(SysUserForm form) {
@@ -46,7 +51,9 @@ public class SysUserDAO extends ServiceImpl<SysUserMapper, SysUser> {
     }
 
     public SysUser findOne(SysUserForm form) {
-        return getOne(new QueryWrapper<>(form.toEntity()));
+        LambdaQueryWrapper<SysUser> wrapper = new LambdaQueryWrapper<SysUser>()
+                .eq(SysUser::getUsername, form.getUsername());
+        return getOne(wrapper);
     }
 
     public SysUser findById(String id) {

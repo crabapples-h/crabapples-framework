@@ -2,14 +2,12 @@ package cn.crabapples.system.sysUser.entity;
 
 import cn.crabapples.common.base.BaseEntity;
 import com.alibaba.fastjson2.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -18,25 +16,34 @@ import java.util.List;
  */
 @Getter
 @Setter
-@TableName("sys_user")
+@TableName(keepGlobalPrefix = true)
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
 @Data(staticConstructor = "create")
 public class SysUser extends BaseEntity<SysUser> {
     @TableId
     private String id;
-    private String username;
+    private Integer age;
+    private String name;
     @JSONField(serialize = false)
     private String password;
-    private String avatar;
-    private String name;
     private Integer status;
+    private String avatar;
+    private String username;
+    private String mail;
+    private String phone;
+    private Integer gender;
     @TableField(exist = false)
     private List<String> roleList;
+//    private byte isAdmin;
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createTime;
+    @TableField(fill = FieldFill.INSERT)
+    private String createBy;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private LocalDateTime updateTime;
+    @TableField(fill = FieldFill.INSERT_UPDATE)
+    private String updateBy;
     @TableLogic
     private Boolean delFlag;
-//    private byte isAdmin;
-    private String createBy;
-    private Date createTime;
-    private Date updateTime;
 }
