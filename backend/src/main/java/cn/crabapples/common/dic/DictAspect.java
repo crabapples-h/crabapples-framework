@@ -5,11 +5,14 @@ import cn.crabapples.system.sysDict.service.impl.SystemDictServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,8 +25,8 @@ import java.util.Map;
  * qq 294046317
  * pc-name mshe
  */
-//@Aspect
-//@Component
+@Aspect
+@Component
 @Slf4j
 public class DictAspect {
     private static final Logger logger = LoggerFactory.getLogger(DictAspect.class);
@@ -43,12 +46,13 @@ public class DictAspect {
     /**
      * 定义切点Pointcut
      */
-    @Pointcut("execution(public * cn.crabapples.*.controller.*.*(..)) || @annotation(cn.crabapples.common.dic.Dict)")
+    @Pointcut("execution(public * cn.crabapples.*.controller.*.*(..)) || @annotation(cn.crabapples.common.dic.EnableDict)")
     public void dictService() {
     }
 
     @Around("dictService()")
     public Object doAround(ProceedingJoinPoint pjp) throws Throwable {
+        log.info("开始切面翻译:[{}]", pjp.getKind());
         long time1 = System.currentTimeMillis();
         Object result = pjp.proceed();
         long time2 = System.currentTimeMillis();
@@ -63,10 +67,15 @@ public class DictAspect {
     // 翻译数据，实现过程在DictEnum枚举中
     private Object parseDictText(Object result) {
         if (result instanceof ResponseDTO) {
-            Object data = ((ResponseDTO) result).getData();
+            ResponseDTO responseDTO = (ResponseDTO) result;
+            Object data = responseDTO.getData();
+            Field[] declaredFields = data.getClass().getDeclaredFields();
+            for (Field field : declaredFields) {
+                System.err.println(field);
+            }
             DictEnum instance = DictEnum.getInstance(data);
             Object resultData = instance.fillDictText(redisTemplate, dictService, data);
-            ((ResponseDTO) result).setData(resultData);
+//            ((ResponseDTO) result).setData(resultData);
         }
         return result;
     }

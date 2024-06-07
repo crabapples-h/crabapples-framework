@@ -3,6 +3,7 @@ package cn.crabapples.system.sysUser.controller;
 import cn.crabapples.common.Groups;
 import cn.crabapples.common.ResponseDTO;
 import cn.crabapples.common.base.BaseController;
+import cn.crabapples.common.dic.EnableDict;
 import cn.crabapples.system.sysUser.dto.SysUserDTO;
 import cn.crabapples.system.sysUser.entity.SysUser;
 import cn.crabapples.system.sysUser.form.SysUserForm;
@@ -39,6 +40,7 @@ public class SystemUserController extends BaseController {
      * 获取[分页]用户列表
      */
     @GetMapping("/pageV2")
+    @EnableDict
 //    @ApiOperation(value = "获取用户列表", notes = "获取用户列表接口")
     public ResponseDTO<IPage<SysUser>> getUserPageV2(
             @RequestParam(required = false, defaultValue = "1") Integer pageIndex,
