@@ -1,7 +1,6 @@
 package cn.crabapples.system.sysUser.dto;
 
 import cn.crabapples.common.base.BaseEntity;
-import cn.crabapples.common.dic.Dict;
 import cn.crabapples.system.sysUser.entity.SysUser;
 import com.alibaba.fastjson2.annotation.JSONField;
 import lombok.Getter;
@@ -25,7 +24,7 @@ public class SysUserDTO extends BaseEntity<SysUser> {
     private String username;
     private String name;
     private String mail;
-    @Dict(dictCode = "gender")
+//    @Dict(dictCode = "gender")
     private Integer gender;
     private String phone;
     private Integer age;

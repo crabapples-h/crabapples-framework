@@ -1,7 +1,6 @@
 package cn.crabapples.system.sysDict.entity;
 
 import cn.crabapples.common.base.BaseEntity;
-import cn.crabapples.common.dic.Dict;
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.*;
@@ -47,7 +46,7 @@ public class SysDictItem extends BaseEntity<SysDictItem> {
 
     // 删除标记 (0:正常 1:删除)
     @TableLogic
-    @Dict(dictCode = "delFlag")
+//    @Dict(dictCode = "delFlag")
     private Integer delFlag;
 
     //创建人

@@ -1,5 +1,6 @@
 package cn.crabapples.common.dic;
 
+import cn.crabapples.common.Dict;
 import cn.crabapples.common.base.BaseEntity;
 import cn.crabapples.common.utils.ReflectUtils;
 import cn.crabapples.system.sysDict.entity.SysDictItem;

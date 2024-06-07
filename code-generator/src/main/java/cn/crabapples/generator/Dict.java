@@ -1,4 +1,4 @@
-//package cn.crabapples.common.dic;
+//package cn.crabapples.generator;
 //
 //import java.lang.annotation.ElementType;
 //import java.lang.annotation.Retention;

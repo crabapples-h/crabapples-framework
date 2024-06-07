@@ -1,5 +1,6 @@
 package cn.crabapples.generator;
 
+import cn.crabapples.common.Dict;
 import com.google.auto.service.AutoService;
 import com.sun.source.util.Trees;
 import net.bytebuddy.ByteBuddy;
@@ -9,13 +10,19 @@ import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
+import javax.lang.model.element.ElementVisitor;
 import javax.lang.model.element.TypeElement;
+import javax.lang.model.element.VariableElement;
 import javax.tools.Diagnostic;
+import javax.tools.JavaFileObject;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
-import com.sun.tools.javac.api.JavacTrees;
+//import com.sun.tools.javac.api.JavacTrees;
 
 @AutoService(Processor.class)
 public class CrabapplesControllerProcessor extends AbstractProcessor {
@@ -31,7 +38,7 @@ public class CrabapplesControllerProcessor extends AbstractProcessor {
     private Filer filer;
     private Messager messager;
     private ClassLoader classLoader;
-    private JavacTrees javacTrees;
+//    private JavacTrees javacTrees;
 
     //支持的java版本
     @Override
@@ -44,12 +51,15 @@ public class CrabapplesControllerProcessor extends AbstractProcessor {
         this.messager = processingEnv.getMessager();
         this.classLoader = this.getClass().getClassLoader();
         super.init(processingEnv);
-        Trees trees = Trees.instance(processingEnv);
-        if (trees instanceof JavacTrees) {
-            javacTrees = (JavacTrees) trees;
-        } else {
-            throw new IllegalStateException("Unexpected Trees implementation");
-        }
+//        Trees trees = Trees.instance(processingEnv);
+//        Class<?> treesClass = Class.forName("com.sun.source.util.Trees");
+//        Method get = treesClass.getMethod("instance", ProcessingEnvironment.class);
+//        Object treesInstance = get.invoke(null, processingEnv);
+//        if (trees instanceof JavacTrees) {
+//            javacTrees = (JavacTrees) trees;
+//        } else {
+//            throw new IllegalStateException("Unexpected Trees implementation");
+//        }
 
     }
 
@@ -73,10 +83,30 @@ public class CrabapplesControllerProcessor extends AbstractProcessor {
         for (Element element : elementsAnnotatedWith) {
             try {
                 TypeElement typeElement = ((TypeElement) element);
-                String className = typeElement.getQualifiedName().toString();
-//                System.err.println(className);
-//                createByByteBuddy(className);
-                createByByteBuddy(typeElement);
+                List<? extends Element> enclosedElements = typeElement.getEnclosedElements();
+                for (Element enclosedElement : enclosedElements) {
+                    if (enclosedElement instanceof VariableElement) {
+                        Dict annotation = enclosedElement.getAnnotation(Dict.class);
+                        if (Objects.nonNull(annotation)) {
+                            System.err.println(enclosedElement.getSimpleName());
+                            System.err.println(annotation);
+                            String demoField = "public String demo;";
+                            String packageName = processingEnv.getElementUtils().getPackageOf(typeElement).getQualifiedName().toString();
+                            String className = typeElement.getSimpleName() + "WithField";
+                            JavaFileObject fileObject = processingEnv.getFiler().createSourceFile(packageName + "." + className);
+                            try (PrintWriter writer = new PrintWriter(fileObject.openWriter())) {
+                                writer.println("package " + packageName + ";");
+                                writer.println("public class " + className + " extends " + typeElement.getQualifiedName() + " {");
+                                writer.println(demoField);
+                                writer.println("}");
+                            }
+                        }
+                    }
+                }
+                //                String className = typeElement.getQualifiedName().toString();
+////                System.err.println(className);
+////                createByByteBuddy(className);
+//                createByByteBuddy(typeElement);
                 System.err.println("---------------------------end");
             } catch (Exception e) {
                 e.printStackTrace();

@@ -1,7 +1,7 @@
 package cn.crabapples.system.sysUser.entity;
 
+import cn.crabapples.common.Dict;
 import cn.crabapples.common.base.BaseEntity;
-import cn.crabapples.common.dic.Dict;
 import cn.crabapples.generator.CrabapplesController;
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.*;
