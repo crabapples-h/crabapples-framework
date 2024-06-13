@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Slf4j
 @Component
@@ -44,7 +43,7 @@ public class MybatisPlusAutoFillHandler implements MetaObjectHandler {
         try {
             String userId = jwtTokenUtils.getUserId();
             log.info("填充用户id:[{}]", userId);
-            return SysUser.create().selectById(userId).getUsername();
+            return new SysUser().selectById(userId).getUsername();
         } catch (Exception e) {
             String defaultStr = "system";
             log.warn("获取请求头中token失败。可能是来自系统内部调用,自动填充为[{}]", defaultStr);

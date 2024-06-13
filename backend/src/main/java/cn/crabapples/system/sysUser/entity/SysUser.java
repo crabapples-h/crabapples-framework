@@ -5,10 +5,7 @@ import cn.crabapples.common.base.BaseEntity;
 import cn.crabapples.generator.CrabapplesController;
 import com.alibaba.fastjson2.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import java.time.LocalDateTime;
@@ -22,8 +19,9 @@ import java.util.List;
 @TableName(keepGlobalPrefix = true)
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
-@Data(staticConstructor = "create")
+//@Data(staticConstructor = "create")
 @CrabapplesController
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 public class SysUser extends BaseEntity<SysUser> {
     @TableId
     private String id;

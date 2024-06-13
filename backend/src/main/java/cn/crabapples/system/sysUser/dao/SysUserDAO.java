@@ -69,10 +69,10 @@ public class SysUserDAO extends ServiceImpl<SysUserMapper, SysUser> {
     }
 
     public boolean lockUser(String id) {
-        return SysUser.create().selectById(id).setStatus(DIC.USER_LOCK).updateById();
+        return new SysUser().selectById(id).setStatus(DIC.USER_LOCK).updateById();
     }
 
     public boolean unlockUser(String id) {
-        return SysUser.create().selectById(id).setStatus(DIC.USER_UNLOCK).updateById();
+        return new SysUser().selectById(id).setStatus(DIC.USER_UNLOCK).updateById();
     }
 }

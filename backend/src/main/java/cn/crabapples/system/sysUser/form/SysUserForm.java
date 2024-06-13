@@ -47,7 +47,7 @@ public class SysUserForm extends BaseForm<SysUser> {
 
     @Getter
     @Setter
-    public static class UpdatePassword extends ResetPassword{
+    public static class UpdatePassword extends ResetPassword {
         @Length(max = 16, message = "长度错误", groups = {Groups.IsCheckLength.class})
         @NotBlank(message = "密码不能为空", groups = {Groups.IsNotNull.class})
 //        @ApiModelProperty(example = "12345678")
@@ -102,7 +102,7 @@ public class SysUserForm extends BaseForm<SysUser> {
 
     @Override
     public SysUser toEntity() {
-        SysUser entity = SysUser.create();
+        SysUser entity = new SysUser();
         BeanUtils.copyProperties(this, entity);
 //        if (null != rolesList)
 //            entity.setRolesList(String.join(",", rolesList));

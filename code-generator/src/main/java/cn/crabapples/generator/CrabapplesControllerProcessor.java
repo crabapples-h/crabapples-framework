@@ -3,6 +3,12 @@ package cn.crabapples.generator;
 import cn.crabapples.common.Dict;
 import com.google.auto.service.AutoService;
 import com.sun.source.util.Trees;
+import com.sun.tools.javac.api.JavacTrees;
+import com.sun.tools.javac.tree.JCTree;
+import com.sun.tools.javac.tree.TreeMaker;
+import com.sun.tools.javac.tree.TreeTranslator;
+import com.sun.tools.javac.util.Context;
+import com.sun.tools.javac.util.Names;
 import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.modifier.Visibility;
 import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
@@ -10,19 +16,17 @@ import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
 import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementVisitor;
+import javax.lang.model.element.Modifier;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.tools.Diagnostic;
-import javax.tools.JavaFileObject;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.lang.reflect.Field;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-//import com.sun.tools.javac.api.JavacTrees;
 
 @AutoService(Processor.class)
 public class CrabapplesControllerProcessor extends AbstractProcessor {
@@ -38,7 +42,9 @@ public class CrabapplesControllerProcessor extends AbstractProcessor {
     private Filer filer;
     private Messager messager;
     private ClassLoader classLoader;
-//    private JavacTrees javacTrees;
+    private JavacTrees javacTrees;
+    private TreeMaker treeMaker;
+    private Names names;
 
     //支持的java版本
     @Override
@@ -46,21 +52,26 @@ public class CrabapplesControllerProcessor extends AbstractProcessor {
         return SourceVersion.latestSupported();
     }
 
+    private Context getContext(Trees trees) {
+        try {
+            Field field = JavacTrees.class.getDeclaredField("context");
+            field.setAccessible(true);
+            return (Context) field.get(trees);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public synchronized void init(ProcessingEnvironment processingEnv) {
         this.filer = processingEnv.getFiler();
         this.messager = processingEnv.getMessager();
         this.classLoader = this.getClass().getClassLoader();
         super.init(processingEnv);
-//        Trees trees = Trees.instance(processingEnv);
-//        Class<?> treesClass = Class.forName("com.sun.source.util.Trees");
-//        Method get = treesClass.getMethod("instance", ProcessingEnvironment.class);
-//        Object treesInstance = get.invoke(null, processingEnv);
-//        if (trees instanceof JavacTrees) {
-//            javacTrees = (JavacTrees) trees;
-//        } else {
-//            throw new IllegalStateException("Unexpected Trees implementation");
-//        }
-
+        javacTrees = JavacTrees.instance(processingEnv);
+//        javacTrees.updateContext();
+        Context context = (Context) javacTrees;
+        treeMaker = TreeMaker.instance((Context) javacTrees);
+        names = Names.instance(context);
     }
 
     /*
@@ -90,16 +101,24 @@ public class CrabapplesControllerProcessor extends AbstractProcessor {
                         if (Objects.nonNull(annotation)) {
                             System.err.println(enclosedElement.getSimpleName());
                             System.err.println(annotation);
-                            String demoField = "public String demo;";
-                            String packageName = processingEnv.getElementUtils().getPackageOf(typeElement).getQualifiedName().toString();
-                            String className = typeElement.getSimpleName() + "WithField";
-                            JavaFileObject fileObject = processingEnv.getFiler().createSourceFile(packageName + "." + className);
-                            try (PrintWriter writer = new PrintWriter(fileObject.openWriter())) {
-                                writer.println("package " + packageName + ";");
-                                writer.println("public class " + className + " extends " + typeElement.getQualifiedName() + " {");
-                                writer.println(demoField);
-                                writer.println("}");
-                            }
+
+                            JCTree.JCClassDecl tree = javacTrees.getTree(typeElement);
+                            TreeTranslator treeTranslator = new TreeTranslator() {
+                                @Override
+                                public void visitClassDef(JCTree.JCClassDecl classDecl) {
+                                    JCTree.JCVariableDecl field = treeMaker.VarDef(
+                                            treeMaker.Modifiers(Modifier.PRIVATE.ordinal()),
+                                            names.fromString("demo"),
+                                            treeMaker.Ident(names.fromString("String")),
+                                            treeMaker.Literal("")
+                                    );
+                                    classDecl.defs = classDecl.defs.prepend(field);
+                                    super.visitClassDef(classDecl);
+                                }
+                            };
+                            System.err.println(treeTranslator);
+                            tree.accept(treeTranslator);
+                            System.err.println(tree);
                         }
                     }
                 }
